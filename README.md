@@ -4,7 +4,7 @@ A browser-only proof of concept. Plain static HTML, CSS and JavaScript; no accou
 
 ## 90-second demonstration
 
-1. Enter a name or nickname and choose SDCCD or one of its colleges.
+1. Choose SDCCD or one of its colleges. No name or account is requested.
 2. Select destinations from nine undergraduate UC campuses and 22 CSU universities.
 3. Enter an intended major. Computer Science has the richest illustrative coverage.
 4. Mark the seven Mesa course examples Completed, Registered or Planning, or explicitly start empty.
@@ -12,7 +12,15 @@ A browser-only proof of concept. Plain static HTML, CSS and JavaScript; no accou
 6. Compare balanced/lighter scenarios; completed and registered courses are preserved.
 7. Edit the profile or coursework, inspect official evidence, and preview the family/counselor summary.
 
-Answers exist only in tab memory and reset on refresh. Nothing is sent to a backend. Copying the public demo link does not share answers. Explicitly copying or downloading a summary includes the entered name and course selections.
+Answers exist only in tab memory and reset on refresh. Nothing is sent to a backend. Copying the public demo link does not share answers. Explicitly copying or downloading a summary includes the course selections.
+
+## Planned exports
+
+See [the export step plan](docs/export-step-plan.md) for the proposed final PDF, Word, Excel and Markdown export experience. This is a roadmap, not implemented export functionality; the existing plain-text summary remains available.
+
+## School identity
+
+The workspace navigation runs across the top so the comparison uses the full page width. Institution listings use locally bundled marks retrieved from official school sites, with visible text names and monogram fallbacks. See [school asset sources](docs/school-asset-sources.md) for provenance and the non-affiliation notice.
 
 ## Scope and provenance
 
