@@ -188,7 +188,43 @@ const SOURCES = {
   "sdsuPathway": "https://admissions.sdsu.edu/transfers/sdccd",
   "csusm": "https://www.csusm.edu/academicadvising/majorminor/worksheets/cs/cs.pdf",
   "assist": "https://assist.org",
+  "assistApiDocs": "https://prod.assistng.org/apidocs/docs/articulation/agreement",
   "assistTerms": "https://resource.assist.org/Development/Terms"
+};
+const ASSIST_AGREEMENTS = {
+  "ucb": {
+    "program": "Computer Science, B.A. + EECS, B.S.",
+    "year": "2025–26",
+    "published": "August 28, 2026",
+    "reviewed": ["math151", "cisc187", "cisc246"],
+    "source": "https://assist.org/transfer/results?year=76&institution=101&agreement=79&agreementType=to&view=agreement&viewBy=major&viewSendingAgreements=false&viewByKey=76%2F101%2Fto%2F79%2FMajor%2F18bc32d8-6aa4-47cc-aced-08ddbf3f4ee7",
+    "matches": {
+      "math151": {"receiving": "MATH 52", "title": "Calculus II", "programNote": "Listed in both the Computer Science B.A. and EECS B.S. agreements."}
+    }
+  },
+  "ucla": {
+    "program": "Computer Science, B.S.",
+    "year": "2025–26",
+    "published": "April 22, 2026",
+    "reviewed": ["math151", "cisc187", "cisc246"],
+    "source": "https://assist.org/transfer/results?year=76&institution=101&agreement=117&agreementType=to&view=agreement&viewBy=major&viewSendingAgreements=false&viewByKey=76%2F101%2Fto%2F117%2FMajor%2F3fc7b07d-4058-4a0a-1f72-08ddcb96df9e",
+    "matches": {
+      "math151": {"receiving": "MATH 31B", "title": "Integration and Infinite Series"},
+      "cisc187": {"receiving": "COM SCI 32", "title": "Introduction to Computer Science II"}
+    }
+  },
+  "pomona": {
+    "program": "Computer Science, B.S.",
+    "year": "2026–27",
+    "published": "September 2, 2026",
+    "reviewed": ["math151", "cisc187", "cisc246"],
+    "source": "https://assist.org/transfer/results?year=77&institution=101&agreement=75&agreementType=to&view=agreement&viewBy=major&viewSendingAgreements=false&viewByKey=77%2F101%2Fto%2F75%2FMajor%2F1155e584-f038-4757-8c82-08deaabd5f92",
+    "matches": {
+      "math151": {"receiving": "MAT 1150", "title": "Calculus II"},
+      "cisc187": {"receiving": "CS 2400", "title": "Data Structures and Advanced Programming"},
+      "cisc246": {"receiving": "CS 1300", "title": "Discrete Structures"}
+    }
+  }
 };
 const TARGETS = [
   {
