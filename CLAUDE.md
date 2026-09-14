@@ -91,6 +91,12 @@ by `activeAssistAgreement()`). It mirrors the ASSIST page: sections → lettered
 AND bundle, plus no-articulation and must-take-at-university items. In a `"one"` group,
 choosing a course clears the other options. `scripts/check.mjs` validates this structure.
 
+Where Miramar has no articulated course for a Berkeley item, Step 4 shows `NEARBY_UCB_CS`
+(`data.js`): the same 2025–26 agreement read on ASSIST for City, Mesa, Grossmont, Cuyamaca,
+Southwestern, Palomar and MiraCosta. Options are informational — never selectable or counted
+toward progress — and a course set must be completed at that one college. Items with no option
+anywhere say so and list the colleges checked.
+
 Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
 `workflow.js`): selecting a tile slides a Completed / Registered / Planning panel in from the
 right, and the tile is color-coded by status with a text label. The dashboard course table

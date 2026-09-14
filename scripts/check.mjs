@@ -33,7 +33,7 @@ let loaded = {};
 try {
   const source = ["data.js", "schools.js"].map((f) => read(`dist/${f}`)).join("\n");
   loaded = vm.runInContext(
-    `${source}\n;({COURSES, ALL_COURSES, MIRAMAR_UCB_CS_COURSES, MIRAMAR_UCB_CS_AGREEMENT, ASSIST_AGREEMENTS, SCHOOL_ASSETS})`,
+    `${source}\n;({COURSES, ALL_COURSES, MIRAMAR_UCB_CS_COURSES, MIRAMAR_UCB_CS_AGREEMENT, NEARBY_UCB_CS, ASSIST_AGREEMENTS, SCHOOL_ASSETS})`,
     sandbox,
     { filename: "data+schools" }
   );
@@ -46,7 +46,7 @@ const CAMPUSES = campusSource ? JSON.parse(campusSource[1]) : [];
 if (!CAMPUSES.length) fail("could not read CAMPUSES from dist/workflow.js");
 for (const campus of CAMPUSES) if (!campus.city) fail(`campus "${campus.id}" has no city for its selection tile`);
 
-const { COURSES = [], ALL_COURSES = [], MIRAMAR_UCB_CS_COURSES = [], MIRAMAR_UCB_CS_AGREEMENT = {}, ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {} } = loaded;
+const { COURSES = [], ALL_COURSES = [], MIRAMAR_UCB_CS_COURSES = [], MIRAMAR_UCB_CS_AGREEMENT = {}, NEARBY_UCB_CS = {}, ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {} } = loaded;
 if (!COURSES.length) fail("COURSES is empty — dist/data.js did not load");
 if (ALL_COURSES.length !== COURSES.length + MIRAMAR_UCB_CS_COURSES.length) fail("ALL_COURSES does not include both sample datasets");
 if (!Object.keys(SCHOOL_ASSETS).length) fail("SCHOOL_ASSETS is empty — dist/schools.js did not load");
@@ -105,6 +105,22 @@ for (const item of agreementItems) {
 }
 for (const course of MIRAMAR_UCB_CS_COURSES) {
   if (!agreementItems.some((item) => item.courseIds?.includes(course.id))) fail(`Miramar course ${course.id} is not placed in any agreement item`);
+}
+// 4c. Options at other colleges must point at checked, source-linked agreements and only fill Miramar gaps.
+if (!NEARBY_UCB_CS.year || !NEARBY_UCB_CS.retrieved) fail("NEARBY_UCB_CS needs year and retrieved date");
+const nearbyIds = new Set((NEARBY_UCB_CS.checked ?? []).map((c) => c.id));
+for (const c of NEARBY_UCB_CS.checked ?? []) {
+  for (const field of ["name", "city", "source"]) if (!c[field]) fail(`nearby college ${c.id} is missing "${field}"`);
+  if (!SCHOOL_ASSETS[c.id]) fail(`nearby college ${c.id} has no SCHOOL_ASSETS monogram`);
+}
+for (const [reqId, options] of Object.entries(NEARBY_UCB_CS.options ?? {})) {
+  const item = agreementItems.find((i) => i.id === reqId);
+  if (!item) fail(`nearby options reference unknown requirement "${reqId}"`);
+  else if (item.courseIds.length || item.atUniversity) fail(`nearby options for ${reqId}, which is not a Miramar no-articulation item`);
+  for (const option of options) {
+    if (!nearbyIds.has(option.college)) fail(`nearby option for ${reqId} uses unchecked college "${option.college}"`);
+    if (!option.courses?.length || option.courses.some((c) => !c.code || !c.title || !c.units)) fail(`nearby option for ${reqId} at ${option.college} has incomplete courses`);
+  }
 }
 const workflow = read("dist/workflow.js");
 for (const label of ["Required · Group A", "Required · Group B", "Highly recommended", "Review", "MIRAMAR COURSE", "BERKELEY EQUIVALENT"]) {

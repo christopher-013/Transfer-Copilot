@@ -213,6 +213,32 @@ const MIRAMAR_UCB_CS_AGREEMENT = {
     ]}
   ]
 };
+// San Diego-area colleges checked for Berkeley requirements Miramar does not articulate: the same UC Berkeley
+// Computer Science, B.A. 2025–26 agreement, read on ASSIST per college and entered by hand. Options are informational —
+// a course set must be completed at that one college, and Miramar acceptance, prerequisites and seats are not verified.
+const assistUcbCsSource = institution => "https://assist.org/transfer/results?year=76&institution="+institution+"&agreement=79&agreementType=to&viewAgreementsOptions=true&view=agreement&viewBy=major&viewSendingAgreements=false&viewByKey=76%2F"+institution+"%2Fto%2F79%2FMajor%2F18bc32d8-6aa4-47cc-aced-08ddbf3f4ee7";
+const NEARBY_UCB_CS = {
+  program:"Computer Science, B.A.",year:"2025–26",retrieved:"2026-09-14",
+  checked:[
+    {id:"city",name:"San Diego City College",city:"San Diego, CA",source:assistUcbCsSource(54)},
+    {id:"mesa",name:"San Diego Mesa College",city:"San Diego, CA",source:assistUcbCsSource(101)},
+    {id:"grossmont",name:"Grossmont College",city:"El Cajon, CA",source:assistUcbCsSource(106)},
+    {id:"cuyamaca",name:"Cuyamaca College",city:"El Cajon, CA",source:assistUcbCsSource(99)},
+    {id:"southwestern",name:"Southwestern College",city:"Chula Vista, CA",source:assistUcbCsSource(138)},
+    {id:"palomar",name:"Palomar College",city:"San Marcos, CA",source:assistUcbCsSource(56)},
+    {id:"miracosta",name:"MiraCosta College",city:"Oceanside, CA",source:assistUcbCsSource(108)}
+  ],
+  options:{
+    ucb_eecs16a:[
+      {college:"palomar",courses:[{code:"MATH 200",title:"Introduction to Linear Algebra",units:3},{code:"MATH 206",title:"Calculus with Differential Equations",units:4},{code:"ENGR 210",title:"Electrical Network Analysis",units:3},{code:"ENGR 210L",title:"Electrical Network Analysis Lab",units:1}],note:"Effective next fall, this articulation will be revised"}
+    ],
+    ucb_compsci61b:[
+      {college:"southwestern",courses:[{code:"MATH 130",title:"Introduction to Computer Programming",units:4},{code:"MATH 140",title:"Data Structures and Algorithms",units:4}],note:"Must complete an additional university course after transfer to satisfy this requirement",additionalUniversityCourse:"COMPSCI 47B"},
+      {college:"palomar",courses:[{code:"CSCI 210",title:"Data Structures",units:4},{code:"CSCI 222",title:"C++ and Object-Oriented Programming",units:4}]},
+      {college:"miracosta",courses:[{code:"CS 112",title:"Introduction to Computer Science II: Java",units:3},{code:"CS 113",title:"Basic Data Structures and Algorithms",units:3}],note:"Must complete an additional university course after transfer to satisfy this requirement",additionalUniversityCourse:"COMPSCI 47B"}
+    ]
+  }
+};
 const ALL_COURSES = [...COURSES,...MIRAMAR_UCB_CS_COURSES];
 function activeAssistAgreement(){return PLAN.college==="miramar"&&isCS()&&PLAN.targetIds.has("ucb")?MIRAMAR_UCB_CS_AGREEMENT:null}
 function activeCourses(){return activeAssistAgreement()?MIRAMAR_UCB_CS_COURSES:COURSES}
