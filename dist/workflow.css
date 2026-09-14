@@ -183,3 +183,24 @@
 .nearby-note{margin-top:8px;padding:7px 9px;border-radius:7px;background:#fff8e8;color:#7a5a17;font-size:12px;line-height:1.5}
 .nearby-option a{display:inline-block;margin-top:8px;font-size:12px;color:#2f5fa8;text-decoration:underline;text-underline-offset:3px}
 .nearby-caveat{margin-top:10px;font-size:12px;line-height:1.55;color:#5f7189}
+/* Transfer Efficiency ring under each destination (only where a complete source-linked agreement exists). */
+.pathways #target-list{max-height:none;overflow:visible;padding-right:0}
+.coverage-card{display:grid;grid-template-columns:132px minmax(0,1fr);gap:20px;align-items:center;margin:10px 0 16px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#fbfcfe}
+.coverage-ring{position:relative;width:132px;height:132px}
+.coverage-ring svg{display:block}
+.ring-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring-center strong{font-size:28px;line-height:1;color:#18273f;font-variant-numeric:tabular-nums}
+.ring-center span{margin-top:4px;font-size:11px;color:#6b7c93}
+.coverage-detail{min-width:0}
+.coverage-title{display:block;font-size:11px;letter-spacing:1px;font-weight:750;text-transform:uppercase;color:#2f6db5}
+.coverage-card h3{margin:3px 0 2px;font-size:16px;color:#18273f}
+.coverage-detail>p{font-size:12px;line-height:1.5;color:#6b7c93}
+.coverage-legend{list-style:none;margin:10px 0 8px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;font-size:12.5px;color:#4d6480}
+.coverage-legend li{display:flex;align-items:center;gap:7px;min-width:0}
+.coverage-legend i{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.coverage-legend strong{margin-left:auto;color:#18273f;font-variant-numeric:tabular-nums}
+.coverage-detail>.coverage-caption{font-size:11.5px;color:#7b8798}
+.coverage-card.unevaluated{display:block;margin:8px 0 14px;padding:10px 14px;border-style:dashed;background:#f7f9fc}
+.coverage-card.unevaluated strong{font-size:13px;color:#485f7b}
+.coverage-card.unevaluated p{margin-top:2px;font-size:12px;line-height:1.5;color:#6b7c93}
+@media(max-width:520px){.coverage-card{grid-template-columns:1fr;justify-items:center}.coverage-detail{width:100%}.coverage-legend{grid-template-columns:1fr}}

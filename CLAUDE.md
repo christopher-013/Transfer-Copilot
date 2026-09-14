@@ -97,6 +97,13 @@ Southwestern, Palomar and MiraCosta. Options are informational — never selecta
 toward progress — and a course set must be completed at that one college. Items with no option
 anywhere say so and list the colleges checked.
 
+The dashboard's Your Destinations panel shows a Transfer Efficiency ring per destination
+(`requirementCoverage()` / `coverageRingHTML()` in `app.js`): the share of that agreement's
+required decisions covered by the plan, split Completed / Registered / Planning / not yet
+planned. It is only computed from a complete source-linked agreement (today Miramar → UC
+Berkeley CS); every other destination shows "not calculated". Never derive a percentage from
+illustrative or unverified matches, and never label registered or planned work as finished.
+
 Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
 `workflow.js`): selecting a tile slides a Completed / Registered / Planning panel in from the
 right, and the tile is color-coded by status with a text label. The dashboard course table
