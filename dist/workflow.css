@@ -257,3 +257,18 @@
 .next-course .next-status.none{background:#ffffff1f;color:#d6eaff}
 .next-course .next-status.registered{background:#2f6db5}
 .next-course .next-status.planning{background:#8f6519}
+/* Next best move without the dark fill: light card, dark text, same structure. */
+.pathways .recommendation{background:#fff;color:#18273f;border:1px solid var(--line)}
+.pathways .recommendation .recommendation-top h2{color:#536b87}
+.pathways .recommendation .recommendation-top .spark{color:#2f6db5}
+.pathways .recommendation .next-course strong{color:#18273f}
+.pathways .recommendation .next-course span{color:#62768f}
+.pathways .recommendation .next-map{background:#f5f7fa;border-color:#e0e6ef}
+.pathways .recommendation .next-arrow{color:#2f6db5}
+.pathways .recommendation .next-map strong{color:#18273f}
+.pathways .recommendation .next-map small{color:#6b7c93}
+.pathways .recommendation .next-why{color:#2f6db5}
+.pathways .recommendation .next-empty{color:#4d6480}
+.pathways .recommendation .next-course .next-status{color:#fff}
+.pathways .recommendation .next-course .next-status.none{background:#eef2f7;color:#536b87}
+.pathways .recommendation .recommendation-note{color:#5f7189}
