@@ -15,7 +15,7 @@ const failures = [];
 const fail = (msg) => failures.push(msg);
 const read = (p) => readFileSync(join(root, p), "utf8");
 
-const scripts = ["data.js", "schools.js", "workflow.js", "schedule.js", "app.js"];
+const scripts = ["data.js", "schools.js", "workflow.js", "schedule.js", "app.js", "export.js"];
 
 // 1. Syntax.
 for (const file of scripts) {
@@ -136,10 +136,14 @@ for (const [reqId, options] of Object.entries(NEARBY_UCB_CS.options ?? {})) {
   }
 }
 const workflow = read("dist/workflow.js");
-for (const label of ["function agreementStages(", "function agreementSectionHTML(", "MIRAMAR COURSE", " EQUIVALENT"]) {
+for (const label of ["function agreementStages(", "section.groups.map", "function agreementSectionHTML(", "MIRAMAR COURSE", " EQUIVALENT", "reviewExportHTML()", "workflow-progress"]) {
   if (!workflow.includes(label)) fail("guided agreement workflow is missing " + label);
 }
 if (!workflow.includes("data-agreement-next") || !workflow.includes("data-agreement-back")) fail("guided agreement workflow has no next/back controls");
+const app = read("dist/app.js");
+for (const label of ["Transfer Completion", "efficiencyScore", "points/c.units", "data-action=\"why\""]) if (!app.includes(label)) fail("decision scoring is missing " + label);
+const exportSource = read("dist/export.js");
+for (const label of ["buildExportSnapshot", "exportMarkdown", "exportDocx", "exportXlsx", "printPlan", "data-export-format"]) if (!exportSource.includes(label)) fail("review/export is missing " + label);
 
 // 5. Every campus resolves a school mark, and every referenced file exists.
 for (const campus of CAMPUSES) {

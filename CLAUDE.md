@@ -91,8 +91,8 @@ fallback (seven catalog courses, partial Berkeley/UCLA/Pomona snapshots, two UCS
 equivalencies) remains for other colleges. Everything else is illustrative or unknown.
 
 Choosing Miramar + Computer Science and any of those schools switches the coursework step to a
-walkthrough with one stage per school section (`agreementStages()` / `agreementSectionHTML()`
-in `workflow.js`). The data mirrors ASSIST: section (`counts` = feeds Transfer Efficiency) →
+walkthrough with one stage per agreement group (`agreementStages()` / `agreementSectionHTML()`
+in `workflow.js`). The data mirrors ASSIST: section (`counts` = feeds Transfer Completion) →
 group (`rule: "all" | "one" | "units"` with `minUnits`, ASSIST instruction text verbatim) →
 receiving item → Miramar courses. `options` are OR alternatives (each an AND bundle);
 `acceptedCourseIds` narrows a bundle where an agreement note says so; `alternateListing` items
@@ -107,7 +107,7 @@ Southwestern, Palomar and MiraCosta. Options are informational — never selecta
 toward progress — and a course set must be completed at that one college. Items with no option
 anywhere say so and list the colleges checked.
 
-The dashboard's Your Destinations panel shows a Transfer Efficiency ring inside each destination's
+The dashboard's Your Destinations panel shows a Transfer Completion ring inside each destination's
 clickable card (the whole card opens that school's applicability dialog)
 (`requirementCoverage()` / `coverageRingHTML()` in `app.js`): the share of that agreement's
 required decisions that are **completed**. Registered and planned decisions are drawn lighter in
@@ -116,13 +116,13 @@ Berkeley, UCLA and Cal Poly SLO CS, using each agreement's counted sections, inc
 requirements Miramar cannot articulate); every other destination shows "not calculated". Never derive a percentage from
 illustrative or unverified matches, and never label registered or planned work as finished.
 
-The "Your next best move" card (`nextMove()` in `app.js`) sits in the destinations column
-after the schools, as a light-blue box. Each destination row inside it shows the Transfer
-Efficiency change and that agreement's articulation note with a source link. It suggests one course that isn't completed yet (not added, planned or
-registered, tagged accordingly) and ranks by how many completed required decisions finishing it
-would add where a complete agreement exists (shown as "Completing it: a% → b%"), then
-by source-linked and illustrative matches at other destinations; ties keep the agreement's
-course order (so the calculus sequence comes first). A course
+The "Your next best move" card (`nextMove()` in `app.js`) sits after the schools as a light-blue
+box. Transfer Efficiency is a course-level score: required decisions earn 3 points, other
+source-linked destination relationships earn 2, and illustrative relationships earn 1; the total
+is divided by course units. Each destination row shows the Transfer Completion change and the
+agreement note with a source link. It suggests one course that isn't completed yet (not added,
+planned or registered, tagged accordingly) and ranks by this per-unit score, destination reach and
+required-decision gain. A course
 that adds nothing (e.g. MATH 255 when CS accepts MATH 254 alone) is never recommended.
 
 Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
@@ -136,6 +136,6 @@ not-completed course with up to three `SDCCD_SCHEDULE` sections
 (home college first) and a link to the rest in the SDCCD class search. Refreshing that snapshot
 is a manual read of the public search page for the 31 course codes.
 
-Next planned work is the export step — see `docs/export-step-plan.md`. It is a plan, not
-an implementation; the plain-text summary is what exists today. Do not ship export buttons
-that do not work.
+The final review stage uses one versioned in-browser snapshot for working Markdown, DOCX and XLSX
+downloads plus a print/save-PDF report. No export is sent to a server. Playwright smoke tests cover
+the Miramar → Berkeley/UCLA flow on desktop and the Coursework layout on mobile.

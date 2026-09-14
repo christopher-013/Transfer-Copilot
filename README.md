@@ -20,9 +20,9 @@ This positioning deliberately differs from tools whose primary value is parsing 
 
 Answers exist only in tab memory and reset on refresh. Nothing is sent to a backend. Copying the public demo link does not share answers. Explicitly copying or downloading a summary includes the course selections.
 
-## Planned exports
+## Review and exports
 
-See [the export step plan](docs/export-step-plan.md) for the proposed final PDF, Word, Excel and Markdown export experience. This is a roadmap, not implemented export functionality; the existing plain-text summary remains available.
+The workflow ends with a review screen. Students can print or save a PDF report and download real Word (`.docx`), Excel (`.xlsx`) or Markdown files generated from one in-browser plan snapshot. No name, account or server upload is required.
 
 ## School identity
 
@@ -49,6 +49,7 @@ Student history is entered by the demo visitor, not preloaded. Only seven Mesa c
 - dist/style.css — responsive styling.
 - dist/data.js — small public-fact dataset, source links, and the frozen ASSIST Computer Science agreement snapshot.
 - dist/app.js — deterministic sample interactions and source explanations.
+- dist/export.js — versioned export snapshot, review screen, and PDF/Word/Excel/Markdown generation.
 - dist/workflow.js — four-step onboarding, campus directory and in-memory student state.
 - dist/workflow.css — responsive onboarding and personalized comparison styles.
 - dist/workspace.css — dashboard shell, navigation and school-mark styles.
@@ -60,7 +61,8 @@ Student history is entered by the demo visitor, not preloaded. Only seven Mesa c
 
 ## Validation performed
 
-- `node scripts/check.mjs` passes: JavaScript syntax, asset-path integrity, agreement/course ID integrity, and no hardcoded sample figures in shipped markup. The same check runs in CI before a Pages deploy.
+- `node scripts/check.mjs` passes: JavaScript syntax, asset-path integrity, agreement/course ID integrity, export coverage, and no hardcoded sample figures in shipped markup.
+- Playwright smoke tests cover Miramar → Berkeley/UCLA, grouped choices, course status, Transfer Completion, Transfer Efficiency, multi-school mapping and the mobile Coursework layout. CI runs both checks before a Pages deploy.
 - Desktop and 390px mobile layout checked; no document-level horizontal overflow.
 - Tested onboarding through personalized results, separate status totals, balanced/lighter/original selections, edit/cancel, reset, search, sharing and source scope labels.
 - No browser runtime errors observed.

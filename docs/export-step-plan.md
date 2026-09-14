@@ -1,6 +1,6 @@
 # Transfer Copilot: final export step
 
-Status: planned, not implemented. Name-free onboarding is implemented separately. Existing copy/download plain-text summaries remain available.
+Status: implemented for the POC. Name-free onboarding and a final review stage are available. PDF uses the browser print/save flow; Word, Excel and Markdown download directly from one in-browser snapshot.
 
 ## Experience
 
@@ -76,4 +76,3 @@ Do not display unsupported export buttons as if they work. If a format is shown 
 ## Validation goal
 
 Ask demo viewers which format they would actually use, who they would share it with, and whether the exported evidence labels prevent overconfidence. Measure usefulness of the handoff rather than treating downloads as proof of academic accuracy.
-
