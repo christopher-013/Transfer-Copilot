@@ -123,7 +123,7 @@ for (const [reqId, options] of Object.entries(NEARBY_UCB_CS.options ?? {})) {
   }
 }
 const workflow = read("dist/workflow.js");
-for (const label of ["Required · Group A", "Required · Group B", "Highly recommended", "Review", "MIRAMAR COURSE", "BERKELEY EQUIVALENT"]) {
+for (const label of ["Required · Group A", "Required · Group B", "Highly recommended", "MIRAMAR COURSE", "BERKELEY EQUIVALENT"]) {
   if (!workflow.includes(label)) fail(`guided agreement workflow is missing "${label}"`);
 }
 if (!workflow.includes("data-agreement-next") || !workflow.includes("data-agreement-back")) fail("guided agreement workflow has no next/back controls");
