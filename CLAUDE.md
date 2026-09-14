@@ -104,6 +104,13 @@ planned. It is only computed from a complete source-linked agreement (today Mira
 Berkeley CS); every other destination shows "not calculated". Never derive a percentage from
 illustrative or unverified matches, and never label registered or planned work as finished.
 
+The "Your next best move" card (`nextMove()` in `app.js`) only suggests courses not yet in
+the plan. It ranks them by how many required decisions they add at destinations with a
+complete agreement (the ring's increase, shown as "Transfer Efficiency at X: a% → b%"), then
+by source-linked and illustrative matches at other destinations; ties keep the agreement's
+course order (so the calculus sequence comes first). A course
+that adds nothing (e.g. MATH 255 when CS accepts MATH 254 alone) is never recommended.
+
 Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
 `workflow.js`): selecting a tile slides a Completed / Registered / Planning panel in from the
 right, and the tile is color-coded by status with a text label. The dashboard course table
