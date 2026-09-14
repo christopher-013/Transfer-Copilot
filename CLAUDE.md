@@ -61,9 +61,14 @@ script enforces this.
 - Compact single-line JS, no semicolon-free style, `"use strict"` at the top of each file.
 - Templates are string concatenation. Run any user-supplied value through `escapeHTML()` —
   the intended major is free text and reaches several templates.
-- Adding a campus means: `CAMPUSES` in `workflow.js` + a `SCHOOL_ASSETS` entry in
-  `schools.js` + a bundled mark under `dist/assets/schools/`. The check script fails if
-  these drift apart, and also flags unused assets.
+- Adding a campus means: `CAMPUSES` in `workflow.js` (with `city`, shown on its selection
+  tile) + a `SCHOOL_ASSETS` entry in `schools.js` + a bundled mark under
+  `dist/assets/schools/`. The check script fails if these drift apart, and also flags
+  unused assets.
+- Step 1 and Step 2 pickers are `.school-tile` cards (logo, name, city). The native
+  radio/checkbox stays inside each tile, visually hidden, for keyboard use and validation.
+- Highlight color is the light-blue `--accent` token family. Green is reserved for
+  meaning: Completed status and source-linked evidence. Don't reintroduce lime.
 - School marks display at 38px or smaller. New bundled files should be 160px max
   dimension; six older marks (Channel Islands, Chico, CSUSM, Monterey Bay, Northridge,
   SDSU) are still 180–504px and could be downscaled when an image tool is available.

@@ -44,6 +44,7 @@ try {
 const campusSource = read("dist/workflow.js").match(/const CAMPUSES=(\[.*?\]);/s);
 const CAMPUSES = campusSource ? JSON.parse(campusSource[1]) : [];
 if (!CAMPUSES.length) fail("could not read CAMPUSES from dist/workflow.js");
+for (const campus of CAMPUSES) if (!campus.city) fail(`campus "${campus.id}" has no city for its selection tile`);
 
 const { COURSES = [], ALL_COURSES = [], MIRAMAR_UCB_CS_COURSES = [], MIRAMAR_UCB_CS_AGREEMENT = {}, ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {} } = loaded;
 if (!COURSES.length) fail("COURSES is empty — dist/data.js did not load");
