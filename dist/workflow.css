@@ -74,3 +74,71 @@
 .logic-divider.and{color:#486787;margin:6px 0}
 .logic-divider.or{margin:16px 0 4px}
 .agreement-note{font-size:13px;line-height:1.6;color:#486787;background:#eef4fc;border-radius:8px;padding:10px 12px;margin-top:8px}
+
+/* Guided ASSIST decision flow inside Step 4 */
+.agreement-journey{margin:22px 0 20px;overflow-x:auto;padding:3px}
+.agreement-journey ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));min-width:650px}
+.agreement-journey li{position:relative}
+.agreement-journey li:not(:last-child)::after{content:"";position:absolute;z-index:0;top:20px;left:calc(50% + 25px);right:calc(-50% + 25px);height:2px;background:#dfe7f1}
+.agreement-journey li.visited::after{background:#9ac65e}
+.agreement-journey button{position:relative;z-index:1;width:100%;border:0;background:transparent;color:#708096;text-align:center;padding:0 8px;cursor:pointer}
+.agreement-journey button>span{display:grid;place-items:center;width:40px;height:40px;margin:0 auto 8px;border:2px solid #dce4ee;border-radius:50%;background:#fff;font-size:13px;font-weight:750}
+.agreement-journey button strong,.agreement-journey button small{display:block;line-height:1.35}
+.agreement-journey button strong{font-size:12px;color:#566b86}
+.agreement-journey button small{font-size:11px;margin-top:3px}
+.agreement-journey .current button>span{background:#18273f;border-color:#18273f;color:#c0ef6d;box-shadow:0 0 0 4px #edf3e6}
+.agreement-journey .current button strong{color:#18273f}
+.agreement-journey .visited button>span{background:#e9f3dd;border-color:#a9d66b;color:#3d6126}
+.agreement-journey button:focus-visible{outline:3px solid #295bde;outline-offset:2px;border-radius:7px}
+.assist-requirement{border:1px solid #dfe6ef;border-radius:16px;background:#fff;overflow:hidden}
+.assist-requirement-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:21px 22px;background:linear-gradient(115deg,#162944,#213b61);color:#fff}
+.assist-requirement-head h3{font-size:23px;margin:3px 0 0;color:#fff}
+.requirement-kind{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;font-weight:750;color:#87a1c3}
+.assist-requirement-head .requirement-kind{color:#c0ef6d}
+.requirement-state{display:inline-block;padding:5px 9px;border-radius:999px;background:#edf2f7;color:#536b87;font-size:11px;font-weight:700;white-space:nowrap}
+.assist-requirement-head .requirement-state{background:#ffffff18;color:#fff;border:1px solid #ffffff30}
+.agreement-group{border:0;margin:0;padding:22px}
+.agreement-group-head{align-items:center;margin:0 0 16px}
+.agreement-group-head>div strong{font-size:17px;color:#18273f}
+.agreement-group-head .requirement-decision{font-size:13px;color:#728198;margin:3px 0 0;min-width:0}
+.group-letter{width:42px;height:42px;border-radius:11px;background:#7d36a3;color:#fff;font-size:19px;box-shadow:inset 0 0 0 4px #a75bc4}
+.agreement-item{margin:12px 0 0;border:1px solid #e0e6ef;border-radius:13px;overflow:hidden;background:#fbfcfe}
+.articulation-map{display:grid;grid-template-columns:minmax(0,.9fr) 68px minmax(0,1.35fr);align-items:stretch}
+.receiving-course,.requirement-courses{min-width:0;padding:18px;margin:0}
+.receiving-course{display:grid;grid-template-columns:auto 1fr;align-content:center;align-items:center;column-gap:10px;row-gap:4px;background:#fff}
+.receiving-course .school-mark{grid-row:2 / span 2;width:31px;height:31px}
+.receiving-course strong{grid-column:2;font-size:17px;color:#5c156e}
+.receiving-course>span:not(.map-side-label):not(.requirement-state){grid-column:2;font-size:13px;line-height:1.45;color:#52677f}
+.receiving-course small{grid-column:2;font-size:11px;color:#8793a4}
+.receiving-course .item-state{grid-column:1 / -1;margin:8px 0 0;width:max-content}
+.map-side-label{grid-column:1 / -1;font-size:10px;letter-spacing:1px;font-weight:750;color:#8090a4;margin-bottom:5px}
+.mapping-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#eff3f8;color:#2354bf;border-left:1px solid #dce4ed;border-right:1px solid #dce4ed}
+.mapping-arrow span{font-size:31px;line-height:1}
+.mapping-arrow small{font-size:9px;text-transform:uppercase;letter-spacing:.7px;margin-top:4px;color:#71839a}
+.requirement-courses{display:flex;flex-direction:column;justify-content:center;background:#f5f7fa}
+.requirement-courses .course-tile{margin:0;background:#fff}
+.mapped-course-option{min-width:0}
+.course-role{display:inline-block;margin:0 0 6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:750;letter-spacing:.2px}
+.course-role.accepted{background:#e5f1d9;color:#416226}
+.course-role.published-pair{background:#eceff4;color:#66778c}
+.agreement-item .agreement-note{margin:0;border-radius:0;border-top:1px solid #cdddf0;padding:12px 18px;background:#edf5ff;color:#385b84}
+.agreement-item .no-articulation{padding:14px;border:1px dashed #cbd4df;border-radius:9px;background:#fff;color:#6d7d92}
+.agreement-item .no-articulation strong{display:block;color:#485f7b;font-size:14px;margin:3px 0}
+.agreement-item .no-articulation p{font-size:12px;line-height:1.5}
+.agreement-group>.logic-divider.or{margin:18px 0 6px;color:#7d36a3}
+.agreement-actions .button.navy{max-width:62%;justify-content:space-between;text-align:left}
+.agreement-review{border:1px solid #dfe6ef;border-radius:16px;overflow:hidden;background:#fff}
+.review-hero{padding:25px;background:linear-gradient(135deg,#eef5ff,#f5f9ef)}
+.review-hero h3{font-size:25px;margin:5px 0 7px;color:#18273f}
+.review-hero p{font-size:13px;line-height:1.65;color:#61758f;max-width:620px}
+.review-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto auto;align-items:center;gap:12px;width:100%;border:0;border-top:1px solid #e5eaf1;background:#fff;padding:16px 19px;text-align:left;color:#18273f;cursor:pointer}
+.review-row:hover{background:#f8fafe}
+.review-row:focus-visible{outline:3px solid #295bde;outline-offset:-3px}
+.review-row>span:nth-child(2){min-width:0}
+.review-row strong,.review-row small{display:block}
+.review-row small{font-size:12px;color:#75859a;line-height:1.55;margin-top:3px;overflow-wrap:anywhere}
+.review-number{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#eaf2df;color:#47652f;font-size:12px;font-weight:750}
+.review-totals{display:flex;gap:10px;flex-wrap:wrap;padding:16px 19px;border-top:1px solid #e5eaf1;background:#f8fafe}
+.review-totals span{padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #e1e7ef;color:#687a91;font-size:12px}
+.review-totals strong{color:#18273f;font-size:16px;margin-right:4px}
+@media(max-width:760px){.articulation-map{grid-template-columns:1fr}.mapping-arrow{flex-direction:row;gap:7px;padding:8px;border:0;border-top:1px solid #dce4ed;border-bottom:1px solid #dce4ed}.mapping-arrow span{transform:rotate(-90deg);font-size:25px}.mapping-arrow small{margin:0}.agreement-group{padding:16px}.assist-requirement-head{padding:18px}.agreement-actions{align-items:stretch;flex-direction:column-reverse}.agreement-actions .button,.agreement-actions .button.navy{max-width:none;width:100%;justify-content:center}.review-row{grid-template-columns:30px minmax(0,1fr) auto}.review-row .requirement-state{grid-column:2}.review-row>span:last-child{grid-column:3;grid-row:1 / span 2}.agreement-item .status-drawer{position:relative;transform:none;visibility:visible;box-shadow:none;border-top:1px solid #e5eaf1;padding:10px;display:none}.agreement-item .course-tile.open .status-drawer{display:flex}.agreement-item .course-tile.open{overflow:visible}.agreement-item .course-pick{padding:13px}}
