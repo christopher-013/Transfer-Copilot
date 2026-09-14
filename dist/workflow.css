@@ -40,6 +40,7 @@
 @media(prefers-reduced-motion:reduce){.school-tile,.tile-check{transition:none}}
 /* Headings focused programmatically after a step change (tabindex="-1") shouldn't show the browser's default focus ring. */
 [tabindex="-1"]:focus{outline:none}
+
 .coverage-flag{display:inline-block;margin-left:auto;padding:2px 7px;border-radius:999px;background:#e5f1ff;color:#1f4f8b;border:1px solid #bcd7f5;font-size:10px;font-style:normal;font-weight:700;letter-spacing:.2px;white-space:nowrap}
 .inline-flag{margin:0 2px}
 /* Course status tiles: select a course, a status panel slides in from the right */
@@ -159,3 +160,8 @@
 .review-totals span{padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #e1e7ef;color:#687a91;font-size:12px}
 .review-totals strong{color:#18273f;font-size:16px;margin-right:4px}
 @media(max-width:760px){.articulation-map{grid-template-columns:1fr}.mapping-arrow{flex-direction:row;gap:7px;padding:8px;border:0;border-top:1px solid #dce4ed;border-bottom:1px solid #dce4ed}.mapping-arrow span{transform:rotate(90deg);font-size:25px}.mapping-arrow small{margin:0}.receiving-course{margin:18px;padding:13px}.agreement-group{padding:16px}.assist-requirement-head{padding:18px}.agreement-actions{align-items:stretch;flex-direction:column-reverse}.agreement-actions .button,.agreement-actions .button.navy{max-width:none;width:100%;justify-content:center}.review-row{grid-template-columns:30px minmax(0,1fr) auto}.review-row .requirement-state{grid-column:2}.review-row>span:last-child{grid-column:3;grid-row:1 / span 2}.agreement-item .status-drawer{position:relative;transform:none;visibility:visible;box-shadow:none;border-top:1px solid #e5eaf1;padding:10px;display:none}.agreement-item .course-tile.open .status-drawer{display:flex}.agreement-item .course-tile.open{overflow:visible}.agreement-item .course-pick{padding:13px}}
+/* The status panel sizes to its own tile, so narrow tiles (Step 4 agreement columns, phones) never clip the options. */
+.course-tile{container-type:inline-size}
+@container (max-width:460px){.status-drawer{left:0;justify-content:center;gap:6px;padding:0 10px;border-left:0}.status-option{flex:1 1 0;min-width:0;padding:9px 6px;font-size:13px}.status-option.clear{flex:0 0 auto;padding:9px 11px}}
+@container (max-width:330px){.status-drawer{flex-wrap:wrap;align-content:center}.status-option,.status-option.clear{flex:1 1 40%}}
+@container (max-width:240px){.status-option,.status-option.clear{flex:1 1 100%}}
