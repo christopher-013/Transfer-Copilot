@@ -4,13 +4,15 @@ A browser-only proof of concept. Plain static HTML, CSS and JavaScript; no accou
 
 ## 90-second demonstration
 
-1. Start with the fictional Mesa student and three UC/CSU targets.
-2. Click UC San Diego to show the sample pathway and source limitations.
-3. Switch from Balanced plan (11 units) to Lighter load (7 units).
-4. Add PHYS 196 or remove another course; watch units, target counts and warnings change.
-5. Open “Why these courses?” to explain the transparent overlap calculation.
-6. Search for calculus, open course evidence, and follow the official class-search link.
-7. Preview the family/counselor view; copy or download the sample summary.
+1. Enter a name or nickname and choose SDCCD or one of its colleges.
+2. Select destinations from nine undergraduate UC campuses and 22 CSU universities.
+3. Enter an intended major. Computer Science has the richest illustrative coverage.
+4. Mark the seven Mesa course examples Completed, Registered or Planning, or explicitly start empty.
+5. Review a personalized campus comparison with source-linked, illustrative and unknown applicability distinguished.
+6. Compare balanced/lighter scenarios; completed and registered courses are preserved.
+7. Edit the profile or coursework, inspect official evidence, and preview the family/counselor summary.
+
+Answers exist only in tab memory and reset on refresh. Nothing is sent to a backend. Copying the public demo link does not share answers. Explicitly copying or downloading a summary includes the entered name and course selections.
 
 ## Scope and provenance
 
@@ -25,7 +27,7 @@ Research snapshot: September 13, 2026.
 
 Only a bounded set of public course facts was collected. ASSIST was not scraped. The owner reports submitting an API request; approval and integration remain pending. No scheduled scraper or background network process is included.
 
-All student history, non-calculus campus mappings, checklist totals, priorities and overlap recommendations are illustrative. General transferability is not major articulation. Current sections, seats, prerequisites and schedule feasibility are unknown. This is not a complete major, GE, GPA, unit, TAG, ADT or admissions audit.
+Student history is entered by the demo visitor, not preloaded. Only seven Mesa catalog examples are imported; choosing City, Miramar or Continuing Education does not substitute their course catalogs. All non-calculus campus mappings and overlap recommendations are illustrative. Unsupported campus/major combinations remain explicitly unknown. General transferability is not major articulation. Current sections, seats, prerequisites and schedule feasibility are unknown. This is not a complete major, GE, GPA, unit, TAG, ADT or admissions audit.
 
 ## Structure
 
@@ -33,6 +35,8 @@ All student history, non-calculus campus mappings, checklist totals, priorities 
 - dist/style.css — responsive styling.
 - dist/data.js — small public-fact dataset, source links, and explicitly illustrative target metadata.
 - dist/app.js — deterministic sample interactions and source explanations.
+- dist/workflow.js — four-step onboarding, campus directory and in-memory student state.
+- dist/workflow.css — responsive onboarding and personalized comparison styles.
 - preview-server.mjs — local static preview.
 - .openai/hosting.json — Sites identity and static output declaration.
 
@@ -40,7 +44,7 @@ All student history, non-calculus campus mappings, checklist totals, priorities 
 
 - JavaScript syntax checked.
 - Desktop and 390px mobile layout checked; no document-level horizontal overflow.
-- Tested balanced/lighter/custom selections, workload warning, target exclusion, reset, search, empty state, modal close, sharing view and summary totals.
+- Tested onboarding through personalized results, separate status totals, balanced/lighter/original selections, edit/cancel, reset, search, sharing and source scope labels.
 - No browser runtime errors observed.
 - WebMCP tools are feature-detected and expose the same sample state. The installed test browser did not provide a native document.modelContext registry, so native WebMCP validation was unavailable; it is not a dependency of the demo.
 
@@ -53,4 +57,3 @@ Replace demo mapping arrays with authorized, versioned official rules. Add agree
 Can a student explain their next step and its tradeoff? Do they distinguish progress from admission odds? Does a counselor find the summary useful? Would they return for the next registration cycle? Does this decision workflow improve on tools they already use?
 
 The linked foundational brief remains the business/product reference; this POC is a deliberately narrow test, not a production implementation.
-
