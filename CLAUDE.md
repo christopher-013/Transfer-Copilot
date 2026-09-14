@@ -107,7 +107,8 @@ Southwestern, Palomar and MiraCosta. Options are informational — never selecta
 toward progress — and a course set must be completed at that one college. Items with no option
 anywhere say so and list the colleges checked.
 
-The dashboard's Your Destinations panel shows a Transfer Efficiency ring per destination
+The dashboard's Your Destinations panel shows a Transfer Efficiency ring inside each destination's
+clickable card (the whole card opens that school's applicability dialog)
 (`requirementCoverage()` / `coverageRingHTML()` in `app.js`): the share of that agreement's
 required decisions that are **completed**. Registered and planned decisions are drawn lighter in
 the ring and labeled "not counted"; only completed work moves the percentage. It is only computed from a complete source-linked agreement (today Miramar → UC
@@ -126,9 +127,11 @@ that adds nothing (e.g. MATH 255 when CS accepts MATH 254 alone) is never recomm
 Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
 `workflow.js`): selecting a tile slides a Completed / Registered / Planning panel in from the
 right, and the tile is color-coded by status with a text label. The dashboard's Next Semester
-section reuses the same tiles for courses that aren't completed (registered, then planning,
-then not added), each mapped to every selected school with `courseMapRowHTML()`. Find your
-next class lists the same not-completed courses with up to three `SDCCD_SCHEDULE` sections
+section reuses the same tiles for planning and not-added courses that a selected agreement
+still needs (`neededCourseIds()`: counted requirements not yet completed; a "choose one" group
+with a planned or registered pick only needs that pick), each mapped to every selected school
+with `courseMapRowHTML()`. There are no scenario presets. Find your next class lists every
+not-completed course with up to three `SDCCD_SCHEDULE` sections
 (home college first) and a link to the rest in the SDCCD class search. Refreshing that snapshot
 is a manual read of the public search page for the 31 course codes.
 

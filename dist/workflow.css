@@ -295,3 +295,11 @@
 .section-meta{margin-top:3px;color:#7a8596;line-height:1.35}
 .section-more{display:inline-block;margin-top:9px;color:#1f5f99;font-weight:600;text-decoration:none}
 .section-more:hover{text-decoration:underline}
+/* Your Destinations: school row + Transfer Efficiency ring as one clickable card (stretched button). */
+.target-card{position:relative;margin-top:10px;background:white;border:1px solid var(--line);border-radius:14px;transition:border-color .15s,box-shadow .15s}
+.target-card:hover{border-color:#90aceb;box-shadow:0 2px 10px #12234210}
+.target-card:has(.target-row:focus-visible){outline:2px solid #6aa9ec;outline-offset:2px}
+.target-card .target-row{margin:0;border:0;background:transparent;border-radius:14px}
+.target-card .target-row:focus-visible{outline:0}
+.target-card .target-row::after{content:"";position:absolute;inset:0;border-radius:14px;cursor:pointer}
+.target-card .coverage-card{margin:0 12px 12px}
