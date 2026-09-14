@@ -33,7 +33,7 @@ let loaded = {};
 try {
   const source = ["data.js", "schools.js"].map((f) => read(`dist/${f}`)).join("\n");
   loaded = vm.runInContext(
-    `${source}\n;({COURSES, ASSIST_AGREEMENTS, SCHOOL_ASSETS})`,
+    `${source}\n;({COURSES, ALL_COURSES, MIRAMAR_UCB_CS_COURSES, MIRAMAR_UCB_CS_AGREEMENT, ASSIST_AGREEMENTS, SCHOOL_ASSETS})`,
     sandbox,
     { filename: "data+schools" }
   );
@@ -45,10 +45,11 @@ const campusSource = read("dist/workflow.js").match(/const CAMPUSES=(\[.*?\]);/s
 const CAMPUSES = campusSource ? JSON.parse(campusSource[1]) : [];
 if (!CAMPUSES.length) fail("could not read CAMPUSES from dist/workflow.js");
 
-const { COURSES = [], ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {} } = loaded;
+const { COURSES = [], ALL_COURSES = [], MIRAMAR_UCB_CS_COURSES = [], MIRAMAR_UCB_CS_AGREEMENT = {}, ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {} } = loaded;
 if (!COURSES.length) fail("COURSES is empty — dist/data.js did not load");
+if (ALL_COURSES.length !== COURSES.length + MIRAMAR_UCB_CS_COURSES.length) fail("ALL_COURSES does not include both sample datasets");
 if (!Object.keys(SCHOOL_ASSETS).length) fail("SCHOOL_ASSETS is empty — dist/schools.js did not load");
-const courseIds = new Set(COURSES.map((c) => c.id));
+const courseIds = new Set(ALL_COURSES.map((c) => c.id));
 const campusIds = new Set(CAMPUSES.map((c) => c.id));
 
 // 3. Every ASSIST agreement points at campuses and courses that exist.
@@ -69,7 +70,7 @@ for (const [campusId, agreement] of Object.entries(ASSIST_AGREEMENTS)) {
 }
 
 // 4. Course records carry the provenance the UI promises.
-for (const course of COURSES) {
+for (const course of ALL_COURSES) {
   for (const field of ["code", "title", "units", "source", "sourceDate", "catalogYear"]) {
     if (course[field] === undefined || course[field] === "") {
       fail(`course ${course.id} is missing "${field}"`);
@@ -79,6 +80,30 @@ for (const course of COURSES) {
   for (const id of course.targets ?? []) {
     if (!campusIds.has(id)) fail(`course ${course.id} targets unknown campus "${id}"`);
   }
+}
+
+// 4b. The source-driven Miramar agreement must preserve its decision logic.
+if (!MIRAMAR_UCB_CS_AGREEMENT.source) fail("Miramar agreement has no official source");
+// Shape: sections → lettered groups (rule "all" | "one") → receiving-course items → AND bundle of courseIds.
+const agreementItems = (MIRAMAR_UCB_CS_AGREEMENT.sections ?? []).flatMap((section) => {
+  if (!section.title || !section.instruction) fail(`Miramar section ${section.id} is missing its ASSIST title or instruction`);
+  return (section.groups ?? []).flatMap((group) => {
+    if (!["all", "one"].includes(group.rule)) fail(`Miramar group ${group.id} has unknown rule "${group.rule}"`);
+    if (group.rule === "one" && !group.instruction) fail(`Miramar group ${group.id} needs its ASSIST instruction text`);
+    return group.items ?? [];
+  });
+});
+if (!agreementItems.length) fail("Miramar agreement has no requirement items");
+for (const item of agreementItems) {
+  if (!item.receivingCode || !item.receivingTitle) fail(`Miramar item ${item.id} is missing its receiving course`);
+  if (!Array.isArray(item.courseIds)) { fail(`Miramar item ${item.id} has no courseIds array`); continue; }
+  if (!item.courseIds.length && !item.noArticulation && !item.atUniversity) fail(`Miramar item ${item.id} has no courses and no no-articulation text`);
+  for (const id of [...item.courseIds, ...(item.acceptedCourseIds ?? [])]) if (!courseIds.has(id)) fail(`Miramar item ${item.id} references unknown course "${id}"`);
+  for (const id of item.acceptedCourseIds ?? []) if (!item.courseIds.includes(id)) fail(`Miramar item ${item.id} accepts "${id}" outside its course bundle`);
+  if (item.acceptedCourseIds && !item.note) fail(`Miramar item ${item.id} narrows its bundle without quoting the agreement note`);
+}
+for (const course of MIRAMAR_UCB_CS_COURSES) {
+  if (!agreementItems.some((item) => item.courseIds?.includes(course.id))) fail(`Miramar course ${course.id} is not placed in any agreement item`);
 }
 
 // 5. Every campus resolves a school mark, and every referenced file exists.
@@ -119,6 +144,6 @@ if (failures.length) {
   process.exit(1);
 }
 console.log(
-  `All checks passed: ${scripts.length} scripts, ${COURSES.length} courses, ` +
+  `All checks passed: ${scripts.length} scripts, ${ALL_COURSES.length} courses, ` +
     `${CAMPUSES.length} campuses, ${Object.keys(ASSIST_AGREEMENTS).length} ASSIST agreements.`
 );

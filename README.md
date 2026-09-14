@@ -2,6 +2,12 @@
 
 A browser-only proof of concept. Plain static HTML, CSS and JavaScript; no accounts, backend, live AI, payment links, private student records, or enrollment actions.
 
+## Product wedge
+
+Transfer Copilot is a decision layer, not another progress ring. Its organizing question is: **“What should I do next to maximize my transfer options?”** The experience makes that visible through a ranked next-course recommendation, lighter-versus-broader scenario tradeoffs, a transparent Transfer Efficiency measure, transfer-risk alerts, official-source evidence, and a parent/counselor review handoff. Cross-SDCCD course shopping with real schedules and availability is the planned action layer; it is clearly labeled as not yet connected in this POC.
+
+This positioning deliberately differs from tools whose primary value is parsing ASSIST, reporting requirement completion, or producing a semester timeline. Those capabilities are now table stakes. The hypothesis to validate is whether students value a recommendation they can understand, pressure-test, verify, and act on during registration.
+
 ## 90-second demonstration
 
 1. Choose SDCCD or one of its colleges. No name or account is requested.

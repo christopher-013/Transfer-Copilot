@@ -79,9 +79,17 @@ UCLA and Cal Poly Pomona, plus two UCSD department equivalencies. Everything els
 explicitly illustrative or unknown. Seven Mesa catalog courses; City, Miramar and
 Continuing Education catalogs are not imported.
 
-A Miramar → UC Berkeley CS snapshot (`MIRAMAR_UCB_CS_*`, `activeCourses()`,
-`activeAssistAgreement()` in `data.js`) is committed but not yet wired into the UI, and
-`scripts/check.mjs` does not validate it yet.
+Choosing Miramar + UC Berkeley + Computer Science switches the coursework step to the full
+Miramar → UC Berkeley CS B.A. agreement (`MIRAMAR_UCB_CS_AGREEMENT` in `data.js`, selected
+by `activeAssistAgreement()`). It mirrors the ASSIST page: sections → lettered groups
+(`rule: "all" | "one"`, with ASSIST's instruction text verbatim) → receiving course → Miramar
+AND bundle, plus no-articulation and must-take-at-university items. In a `"one"` group,
+choosing a course clears the other options. `scripts/check.mjs` validates this structure.
+
+Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
+`workflow.js`): selecting a tile slides a Completed / Registered / Planning panel in from the
+right, and the tile is color-coded by status with a text label. The dashboard course table
+still uses a `<select>`.
 
 Next planned work is the export step — see `docs/export-step-plan.md`. It is a plan, not
 an implementation; the plain-text summary is what exists today. Do not ship export buttons
