@@ -229,3 +229,5 @@
 .fit-dest.unknown .fit-dest-course{font-weight:500;color:#6d7d92}
 .fit-dest small{font-size:11.5px;line-height:1.45;color:#7b8798}
 @media(max-width:760px){.fit-row{grid-template-columns:1fr}.fit-course{min-height:0}.fit-destinations{padding-top:12px}}
+/* Section labels are the section headings now (taglines removed); keep the small eyebrow look. */
+.section-heading h2.eyebrow{margin:0;font-size:12px;line-height:1.4;letter-spacing:1.5px;font-weight:700;color:#798395}
