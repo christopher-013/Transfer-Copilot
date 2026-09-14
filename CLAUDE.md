@@ -25,6 +25,7 @@ by GitHub Pages. Scripts load in order via `defer` and share one global scope:
 - `data.js` — course records, `SOURCES`, `ASSIST_AGREEMENTS` (frozen agreement snapshots)
 - `schools.js` — `schoolBadge()`, institution marks with monogram fallbacks
 - `workflow.js` — `PLAN` state, `COLLEGES`/`CAMPUSES`/`MAJORS`, the 4-step wizard
+- `schedule.js` — dated SDCCD class search snapshot (`SDCCD_SCHEDULE`) for Find your next class
 - `app.js` — dashboard render, evidence dialogs, scenarios, sharing, WebMCP tools
 
 State lives in `PLAN` in tab memory only. No backend, no accounts, no localStorage, no
@@ -45,8 +46,10 @@ absence of a requirement.
 
 **No completion or admission claims.** General catalog transferability is not major
 articulation. Progress is not eligibility and never admission odds. Course statuses are
-self-reported; registered and planned work never counts toward completed totals. Current
-sections, seats and prerequisites are unknown and must say so.
+self-reported; registered and planned work never counts toward completed totals. Prerequisites are
+unknown and must say so. Sections and seats come only from the dated SDCCD snapshot in
+`schedule.js`; always show its term and as-of date, link to the official search, and never
+present it as live. Keep instructor names and emails out of it.
 
 **No invented figures in shipped markup.** `dist/index.html` once carried hardcoded
 sample numbers that `render()` overwrote. `scripts/check.mjs` now fails on them. Leave
@@ -122,8 +125,12 @@ that adds nothing (e.g. MATH 255 when CS accepts MATH 254 alone) is never recomm
 
 Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
 `workflow.js`): selecting a tile slides a Completed / Registered / Planning panel in from the
-right, and the tile is color-coded by status with a text label. The dashboard course table
-still uses a `<select>`.
+right, and the tile is color-coded by status with a text label. The dashboard's Next Semester
+section reuses the same tiles for courses that aren't completed (registered, then planning,
+then not added), each mapped to every selected school with `courseMapRowHTML()`. Find your
+next class lists the same not-completed courses with up to three `SDCCD_SCHEDULE` sections
+(home college first) and a link to the rest in the SDCCD class search. Refreshing that snapshot
+is a manual read of the public search page for the 31 course codes.
 
 Next planned work is the export step — see `docs/export-step-plan.md`. It is a plan, not
 an implementation; the plain-text summary is what exists today. Do not ship export buttons

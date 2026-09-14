@@ -15,7 +15,7 @@ const failures = [];
 const fail = (msg) => failures.push(msg);
 const read = (p) => readFileSync(join(root, p), "utf8");
 
-const scripts = ["data.js", "schools.js", "workflow.js", "app.js"];
+const scripts = ["data.js", "schools.js", "workflow.js", "schedule.js", "app.js"];
 
 // 1. Syntax.
 for (const file of scripts) {
@@ -31,9 +31,9 @@ const sandbox = { document: { addEventListener() {} }, window: {} };
 vm.createContext(sandbox);
 let loaded = {};
 try {
-  const source = ["data.js", "schools.js"].map((f) => read(`dist/${f}`)).join("\n");
+  const source = ["data.js", "schools.js", "schedule.js"].map((f) => read(`dist/${f}`)).join("\n");
   loaded = vm.runInContext(
-    `${source}\n;({COURSES, ALL_COURSES, MIRAMAR_CS_COURSES, MIRAMAR_CS_AGREEMENTS, NEARBY_UCB_CS, ASSIST_AGREEMENTS, SCHOOL_ASSETS})`,
+    `${source}\n;({COURSES, ALL_COURSES, MIRAMAR_CS_COURSES, MIRAMAR_CS_AGREEMENTS, NEARBY_UCB_CS, ASSIST_AGREEMENTS, SCHOOL_ASSETS, SDCCD_SCHEDULE})`,
     sandbox,
     { filename: "data+schools" }
   );
@@ -46,7 +46,7 @@ const CAMPUSES = campusSource ? JSON.parse(campusSource[1]) : [];
 if (!CAMPUSES.length) fail("could not read CAMPUSES from dist/workflow.js");
 for (const campus of CAMPUSES) if (!campus.city) fail(`campus "${campus.id}" has no city for its selection tile`);
 
-const { COURSES = [], ALL_COURSES = [], MIRAMAR_CS_COURSES = [], MIRAMAR_CS_AGREEMENTS = {}, NEARBY_UCB_CS = {}, ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {} } = loaded;
+const { COURSES = [], ALL_COURSES = [], MIRAMAR_CS_COURSES = [], MIRAMAR_CS_AGREEMENTS = {}, NEARBY_UCB_CS = {}, ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {}, SDCCD_SCHEDULE = {} } = loaded;
 if (!COURSES.length) fail("COURSES is empty — dist/data.js did not load");
 if (ALL_COURSES.length !== COURSES.length + MIRAMAR_CS_COURSES.length) fail("ALL_COURSES does not include both sample datasets");
 if (!Object.keys(SCHOOL_ASSETS).length) fail("SCHOOL_ASSETS is empty — dist/schools.js did not load");
@@ -157,6 +157,26 @@ for (const [id, asset] of Object.entries(SCHOOL_ASSETS)) {
 for (const file of readdirSync(join(dist, "assets/schools"))) {
   if (!referenced.has(`assets/schools/${file}`)) fail(`unused asset assets/schools/${file}`);
 }
+
+// 5b. The SDCCD schedule snapshot is dated, sourced and covers every Miramar sending course.
+if (!SDCCD_SCHEDULE.term || !/^\d{4}-\d{2}-\d{2}$/.test(SDCCD_SCHEDULE.retrieved ?? "") || !/^https:\/\/www\.sdccd\.edu\//.test(SDCCD_SCHEDULE.source ?? "")) fail("SDCCD_SCHEDULE needs term, retrieved (YYYY-MM-DD) and an sdccd.edu source");
+const scheduleCourses = SDCCD_SCHEDULE.courses ?? {};
+const scheduleColleges = Object.keys(SDCCD_SCHEDULE.colleges ?? {});
+for (const c of MIRAMAR_CS_COURSES) if (!scheduleCourses[c.code]) fail(`SDCCD_SCHEDULE has no entry for ${c.code}`);
+for (const [code, entry] of Object.entries(scheduleCourses)) {
+  const byCollege = entry.byCollege ?? {};
+  const sum = Object.values(byCollege).reduce((a, b) => a + b, 0);
+  if (sum !== entry.total) fail(`SDCCD_SCHEDULE ${code}: byCollege sums to ${sum}, total is ${entry.total}`);
+  if (!Array.isArray(entry.sections) || !entry.sections.length || entry.sections.length > entry.total) fail(`SDCCD_SCHEDULE ${code}: sections missing or more than total`);
+  if (entry.open > entry.total) fail(`SDCCD_SCHEDULE ${code}: more open sections than total`);
+  for (const row of entry.sections ?? []) {
+    if (row.length !== 10) fail(`SDCCD_SCHEDULE ${code} #${row[0]}: expected 10 fields (no instructor data)`);
+    if (!scheduleColleges.includes(row[1])) fail(`SDCCD_SCHEDULE ${code} #${row[0]}: unknown college "${row[1]}"`);
+    if (!["Open", "Full", "Closed"].includes(row[5])) fail(`SDCCD_SCHEDULE ${code} #${row[0]}: unknown status "${row[5]}"`);
+    if (![row[0], row[6], row[7], row[8], row[9]].every(Number.isInteger)) fail(`SDCCD_SCHEDULE ${code} #${row[0]}: non-integer seat fields`);
+  }
+}
+for (const k of scheduleColleges) if (!SCHOOL_ASSETS[SDCCD_SCHEDULE.colleges[k].id]) fail(`SDCCD_SCHEDULE college ${k} has no school mark`);
 
 // 6. Shipped markup must not contain invented sample figures. JS overwrites these
 // containers on render, but the numbers are still fabricated data in a public artifact.
