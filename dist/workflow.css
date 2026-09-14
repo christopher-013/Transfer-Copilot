@@ -303,3 +303,5 @@
 .target-card .target-row:focus-visible{outline:0}
 .target-card .target-row::after{content:"";position:absolute;inset:0;border-radius:14px;cursor:pointer}
 .target-card .coverage-card{margin:0 12px 12px}
+/* The district note now holds only the official search link. */
+.district-note{display:flex;justify-content:flex-end}
