@@ -24,7 +24,7 @@ The workspace navigation runs across the top so the comparison uses the full pag
 
 ## Scope and provenance
 
-Research snapshot: September 13, 2026.
+Course and agreement research snapshot: September 13, 2026. School identity marks were retrieved September 14, 2026; see [school asset sources](docs/school-asset-sources.md).
 
 - Seven Mesa course codes, titles, units and general UC/CSU transferability: [official Mesa 2026–27 catalog](https://www.sdccd.edu/docs/ISPT/instsrv/Catalogs/MetaFiles/2026_2027/Mesa2026_2027.pdf). Course pages are linked per record in dist/data.js.
 - Official UCSD math department table: [transfer equivalencies](https://math.ucsd.edu/students/undergraduate/transfer-equivalencies). Mesa row dated June 16, 2026 lists MATH 150 → UCSD MATH 20A and MATH 151 → UCSD MATH 20B. Individual applicability is not certified.
@@ -41,16 +41,20 @@ Student history is entered by the demo visitor, not preloaded. Only seven Mesa c
 
 - dist/index.html — page structure, metadata and custom favicon.
 - dist/style.css — responsive styling.
-- dist/data.js — small public-fact dataset, source links, and explicitly illustrative target metadata.
+- dist/data.js — small public-fact dataset, source links, and the frozen ASSIST Computer Science agreement snapshot.
 - dist/app.js — deterministic sample interactions and source explanations.
 - dist/workflow.js — four-step onboarding, campus directory and in-memory student state.
 - dist/workflow.css — responsive onboarding and personalized comparison styles.
+- dist/workspace.css — dashboard shell, navigation and school-mark styles.
+- dist/schools.js — school-mark lookup with text monogram fallbacks.
+- dist/assets/schools/ — locally bundled institution marks.
+- scripts/check.mjs — pre-deploy syntax and data-integrity checks (`node scripts/check.mjs`).
 - preview-server.mjs — local static preview.
 - .openai/hosting.json — Sites identity and static output declaration.
 
 ## Validation performed
 
-- JavaScript syntax checked.
+- `node scripts/check.mjs` passes: JavaScript syntax, asset-path integrity, agreement/course ID integrity, and no hardcoded sample figures in shipped markup. The same check runs in CI before a Pages deploy.
 - Desktop and 390px mobile layout checked; no document-level horizontal overflow.
 - Tested onboarding through personalized results, separate status totals, balanced/lighter/original selections, edit/cancel, reset, search, sharing and source scope labels.
 - No browser runtime errors observed.
@@ -64,4 +68,4 @@ Replace demo mapping arrays with authorized, versioned official rules. Add agree
 
 Can a student explain their next step and its tradeoff? Do they distinguish progress from admission odds? Does a counselor find the summary useful? Would they return for the next registration cycle? Does this decision workflow improve on tools they already use?
 
-The linked foundational brief remains the business/product reference; this POC is a deliberately narrow test, not a production implementation.
+The [foundational brief](docs/foundational-brief.md) remains the business/product reference; this POC is a deliberately narrow test, not a production implementation.

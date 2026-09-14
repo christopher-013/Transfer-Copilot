@@ -24,3 +24,5 @@
 .workflow-steps .done small{color:#476932}
 .workflow-disclaimer{font-size:12px;line-height:1.7;text-align:center;color:#68788e;margin:22px 10px}
 @media(max-width:680px){.workflow-shell{padding:0 16px;margin-top:12px}.workflow-progress{padding:19px 5px;margin-bottom:20px;border-radius:14px}.workflow-number{width:36px;height:36px;font-size:14px}.workflow-steps li{gap:10px}.workflow-steps li:not(:last-child)::after{top:17px;left:calc(50% + 23px);width:calc(100% - 46px)}.workflow-label{font-size:12px;overflow-wrap:anywhere}.workflow-label small{font-size:12px;margin-top:4px}.workflow-shell .onboard-main{padding:24px 20px}.workflow-disclaimer{margin:20px 0}}
+.coverage-flag{display:inline-block;margin-left:auto;padding:2px 7px;border-radius:999px;background:#eef6e2;color:#4a6118;border:1px solid #d6e7bb;font-size:10px;font-style:normal;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+.inline-flag{margin:0 2px}

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "transfer-copilot",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["preview-server.mjs"],
+      "port": 4173
+    }
+  ]
+}

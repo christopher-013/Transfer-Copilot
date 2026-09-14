@@ -2,7 +2,7 @@
 
 These marks are used only to identify institutions in the Transfer Copilot prototype. All names and marks belong to their respective institutions; their presence does not imply endorsement or affiliation.
 
-The project bundles the retrieved files under `dist/assets/schools/` so the demo does not make third-party image requests. Sources were verified against official institution pages on September 14, 2026. UC Merced and Sonoma State use text monograms because their official sites blocked retrieval during the research snapshot.
+The project bundles the retrieved files under `dist/assets/schools/` so the demo does not make third-party image requests. Marks are displayed at 38 CSS pixels or smaller, so the heavier originals were downscaled to a 160-pixel maximum dimension and re-encoded, and several `.ico` originals were converted to `.png`. Six already-small marks (Channel Islands, Chico, CSU San Marcos, Monterey Bay, Northridge and SDSU; 31 KB combined) remain at their retrieved 180–504 pixel size. No mark was recoloured, cropped or otherwise altered. Sources were verified against official institution pages on September 14, 2026. UC Merced and Sonoma State use text monograms because their official sites blocked retrieval during the research snapshot.
 
 | Institution | Asset type | Official homepage | Original asset URL |
 | --- | --- | --- | --- |
