@@ -79,17 +79,24 @@ script enforces this.
 
 ## Current state
 
-Computer Science is the only major with real coverage: ASSIST snapshots for UC Berkeley,
-UCLA and Cal Poly Pomona, plus two UCSD department equivalencies. Everything else is
-explicitly illustrative or unknown. Seven Mesa catalog courses; City, Miramar and
-Continuing Education catalogs are not imported.
+The demo focuses on Miramar → Computer Science. Complete 2025–26 agreements exist for UC
+Berkeley (CS B.A.), UCLA (CS B.S.) and Cal Poly San Luis Obispo (CS B.S.) in
+`MIRAMAR_CS_AGREEMENTS` (`data.js`), with the 31 Miramar sending courses in
+`MIRAMAR_CS_COURSES`. They were read on ASSIST and entered by hand; once ASSIST API access is
+approved, ingestion replaces these snapshots — do not add page reads or scrapers. The Mesa
+fallback (seven catalog courses, partial Berkeley/UCLA/Pomona snapshots, two UCSD department
+equivalencies) remains for other colleges. Everything else is illustrative or unknown.
 
-Choosing Miramar + UC Berkeley + Computer Science switches the coursework step to the full
-Miramar → UC Berkeley CS B.A. agreement (`MIRAMAR_UCB_CS_AGREEMENT` in `data.js`, selected
-by `activeAssistAgreement()`). It mirrors the ASSIST page: sections → lettered groups
-(`rule: "all" | "one"`, with ASSIST's instruction text verbatim) → receiving course → Miramar
-AND bundle, plus no-articulation and must-take-at-university items. In a `"one"` group,
-choosing a course clears the other options. `scripts/check.mjs` validates this structure.
+Choosing Miramar + Computer Science and any of those schools switches the coursework step to a
+walkthrough with one stage per school section (`agreementStages()` / `agreementSectionHTML()`
+in `workflow.js`). The data mirrors ASSIST: section (`counts` = feeds Transfer Efficiency) →
+group (`rule: "all" | "one" | "units"` with `minUnits`, ASSIST instruction text verbatim) →
+receiving item → Miramar courses. `options` are OR alternatives (each an AND bundle);
+`acceptedCourseIds` narrows a bundle where an agreement note says so; `alternateListing` items
+repeat content listed elsewhere and are never counted. Shared helpers (`itemLevel`,
+`groupLevels`, `agreementDecisionLevels`) live in `data.js`. A status set on a Miramar course
+updates every school that uses it; a "choose one" pick only clears other options whose courses
+no other requirement or school uses. `scripts/check.mjs` validates this structure.
 
 Where Miramar has no articulated course for a Berkeley item, Step 4 shows `NEARBY_UCB_CS`
 (`data.js`): the same 2025–26 agreement read on ASSIST for City, Mesa, Grossmont, Cuyamaca,
@@ -101,7 +108,8 @@ The dashboard's Your Destinations panel shows a Transfer Efficiency ring per des
 (`requirementCoverage()` / `coverageRingHTML()` in `app.js`): the share of that agreement's
 required decisions that are **completed**. Registered and planned decisions are drawn lighter in
 the ring and labeled "not counted"; only completed work moves the percentage. It is only computed from a complete source-linked agreement (today Miramar → UC
-Berkeley CS); every other destination shows "not calculated". Never derive a percentage from
+Berkeley, UCLA and Cal Poly SLO CS, using each agreement's counted sections, including
+requirements Miramar cannot articulate); every other destination shows "not calculated". Never derive a percentage from
 illustrative or unverified matches, and never label registered or planned work as finished.
 
 The "Your next best move" card (`nextMove()` in `app.js`) sits in the destinations column

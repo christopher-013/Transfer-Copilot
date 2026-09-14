@@ -33,7 +33,7 @@ let loaded = {};
 try {
   const source = ["data.js", "schools.js"].map((f) => read(`dist/${f}`)).join("\n");
   loaded = vm.runInContext(
-    `${source}\n;({COURSES, ALL_COURSES, MIRAMAR_UCB_CS_COURSES, MIRAMAR_UCB_CS_AGREEMENT, NEARBY_UCB_CS, ASSIST_AGREEMENTS, SCHOOL_ASSETS})`,
+    `${source}\n;({COURSES, ALL_COURSES, MIRAMAR_CS_COURSES, MIRAMAR_CS_AGREEMENTS, NEARBY_UCB_CS, ASSIST_AGREEMENTS, SCHOOL_ASSETS})`,
     sandbox,
     { filename: "data+schools" }
   );
@@ -46,9 +46,9 @@ const CAMPUSES = campusSource ? JSON.parse(campusSource[1]) : [];
 if (!CAMPUSES.length) fail("could not read CAMPUSES from dist/workflow.js");
 for (const campus of CAMPUSES) if (!campus.city) fail(`campus "${campus.id}" has no city for its selection tile`);
 
-const { COURSES = [], ALL_COURSES = [], MIRAMAR_UCB_CS_COURSES = [], MIRAMAR_UCB_CS_AGREEMENT = {}, NEARBY_UCB_CS = {}, ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {} } = loaded;
+const { COURSES = [], ALL_COURSES = [], MIRAMAR_CS_COURSES = [], MIRAMAR_CS_AGREEMENTS = {}, NEARBY_UCB_CS = {}, ASSIST_AGREEMENTS = {}, SCHOOL_ASSETS = {} } = loaded;
 if (!COURSES.length) fail("COURSES is empty — dist/data.js did not load");
-if (ALL_COURSES.length !== COURSES.length + MIRAMAR_UCB_CS_COURSES.length) fail("ALL_COURSES does not include both sample datasets");
+if (ALL_COURSES.length !== COURSES.length + MIRAMAR_CS_COURSES.length) fail("ALL_COURSES does not include both sample datasets");
 if (!Object.keys(SCHOOL_ASSETS).length) fail("SCHOOL_ASSETS is empty — dist/schools.js did not load");
 const courseIds = new Set(ALL_COURSES.map((c) => c.id));
 const campusIds = new Set(CAMPUSES.map((c) => c.id));
@@ -83,48 +83,61 @@ for (const course of ALL_COURSES) {
   }
 }
 
-// 4b. The source-driven Miramar agreement must preserve its decision logic.
-if (!MIRAMAR_UCB_CS_AGREEMENT.source) fail("Miramar agreement has no official source");
-// Shape: sections → lettered groups (rule "all" | "one") → receiving-course items → AND bundle of courseIds.
-const agreementItems = (MIRAMAR_UCB_CS_AGREEMENT.sections ?? []).flatMap((section) => {
-  if (!section.title || !section.instruction) fail(`Miramar section ${section.id} is missing its ASSIST title or instruction`);
-  return (section.groups ?? []).flatMap((group) => {
-    if (!["all", "one"].includes(group.rule)) fail(`Miramar group ${group.id} has unknown rule "${group.rule}"`);
-    if (group.rule === "one" && !group.instruction) fail(`Miramar group ${group.id} needs its ASSIST instruction text`);
-    return group.items ?? [];
-  });
-});
-if (!agreementItems.length) fail("Miramar agreement has no requirement items");
-for (const item of agreementItems) {
-  if (!item.receivingCode || !item.receivingTitle) fail(`Miramar item ${item.id} is missing its receiving course`);
-  if (!Array.isArray(item.courseIds)) { fail(`Miramar item ${item.id} has no courseIds array`); continue; }
-  if (!item.courseIds.length && !item.noArticulation && !item.atUniversity) fail(`Miramar item ${item.id} has no courses and no no-articulation text`);
-  for (const id of [...item.courseIds, ...(item.acceptedCourseIds ?? [])]) if (!courseIds.has(id)) fail(`Miramar item ${item.id} references unknown course "${id}"`);
-  for (const id of item.acceptedCourseIds ?? []) if (!item.courseIds.includes(id)) fail(`Miramar item ${item.id} accepts "${id}" outside its course bundle`);
-  if (item.acceptedCourseIds && !item.note) fail(`Miramar item ${item.id} narrows its bundle without quoting the agreement note`);
+// 4b. Source-driven Miramar agreements must preserve their decision logic.
+const agreementList = Object.values(MIRAMAR_CS_AGREEMENTS);
+if (!agreementList.length) fail("MIRAMAR_CS_AGREEMENTS is empty");
+const allAgreementItems = [];
+for (const agreement of agreementList) {
+  for (const field of ["id", "targetId", "receiving", "shortName", "program", "year", "source", "efficiencyLabel"]) if (!agreement[field]) fail("Miramar agreement " + agreement.id + " is missing " + field);
+  if (!campusIds.has(agreement.targetId)) fail("Miramar agreement " + agreement.id + " targets unknown campus " + agreement.targetId);
+  if (!(agreement.sections ?? []).some((s) => s.counts)) fail("Miramar agreement " + agreement.id + " has no counted section");
+  const itemIds = new Set();
+  for (const section of agreement.sections ?? []) {
+    if (!section.title) fail(agreement.id + " section " + section.id + " has no title");
+    for (const group of section.groups ?? []) {
+      if (!["all", "one", "units"].includes(group.rule)) fail(agreement.id + " group " + group.id + " has unknown rule " + group.rule);
+      if (group.rule !== "all" && !group.instruction) fail(agreement.id + " group " + group.id + " needs its ASSIST instruction text");
+      if (group.rule === "units" && !(group.minUnits > 0)) fail(agreement.id + " group " + group.id + " needs minUnits");
+      for (const item of group.items ?? []) {
+        if (itemIds.has(item.id)) fail(agreement.id + " repeats item id " + item.id);
+        itemIds.add(item.id);
+        allAgreementItems.push(item);
+        if (!item.receivingCode || !item.receivingTitle) fail(agreement.id + " item " + item.id + " is missing its receiving course");
+        if (!Array.isArray(item.courseIds)) { fail(agreement.id + " item " + item.id + " has no courseIds array"); continue; }
+        if (!item.courseIds.length && !item.noArticulation && !item.atUniversity) fail(agreement.id + " item " + item.id + " has no courses and no no-articulation text");
+        for (const id of [...(item.options ?? []).flat(), ...item.courseIds, ...(item.acceptedCourseIds ?? [])]) if (!courseIds.has(id)) fail(agreement.id + " item " + item.id + " references unknown course " + id);
+        if (item.options && item.options.flat().some((id) => !item.courseIds.includes(id))) fail(agreement.id + " item " + item.id + " options are missing from courseIds");
+        for (const id of item.acceptedCourseIds ?? []) if (!item.courseIds.includes(id)) fail(agreement.id + " item " + item.id + " accepts " + id + " outside its course bundle");
+        if (item.acceptedCourseIds && !item.note) fail(agreement.id + " item " + item.id + " narrows its bundle without quoting the agreement note");
+      }
+    }
+  }
 }
-for (const course of MIRAMAR_UCB_CS_COURSES) {
-  if (!agreementItems.some((item) => item.courseIds?.includes(course.id))) fail(`Miramar course ${course.id} is not placed in any agreement item`);
+for (const course of MIRAMAR_CS_COURSES) {
+  if (!allAgreementItems.some((item) => item.courseIds?.includes(course.id))) fail("Miramar course " + course.id + " is not placed in any agreement item");
 }
-// 4c. Options at other colleges must point at checked, source-linked agreements and only fill Miramar gaps.
+// 4c. Options at other colleges must point at checked, source-linked agreements and only fill gaps in their agreement.
+const nearbyAgreement = MIRAMAR_CS_AGREEMENTS[NEARBY_UCB_CS.targetId];
+if (!nearbyAgreement) fail("NEARBY_UCB_CS.targetId does not match a Miramar agreement");
+const agreementItems = nearbyAgreement ? nearbyAgreement.sections.flatMap((s) => s.groups.flatMap((g) => g.items)) : [];
 if (!NEARBY_UCB_CS.year || !NEARBY_UCB_CS.retrieved) fail("NEARBY_UCB_CS needs year and retrieved date");
 const nearbyIds = new Set((NEARBY_UCB_CS.checked ?? []).map((c) => c.id));
 for (const c of NEARBY_UCB_CS.checked ?? []) {
-  for (const field of ["name", "city", "source"]) if (!c[field]) fail(`nearby college ${c.id} is missing "${field}"`);
-  if (!SCHOOL_ASSETS[c.id]) fail(`nearby college ${c.id} has no SCHOOL_ASSETS monogram`);
+  for (const field of ["name", "city", "source"]) if (!c[field]) fail("nearby college " + c.id + " is missing " + field);
+  if (!SCHOOL_ASSETS[c.id]) fail("nearby college " + c.id + " has no SCHOOL_ASSETS monogram");
 }
 for (const [reqId, options] of Object.entries(NEARBY_UCB_CS.options ?? {})) {
   const item = agreementItems.find((i) => i.id === reqId);
-  if (!item) fail(`nearby options reference unknown requirement "${reqId}"`);
-  else if (item.courseIds.length || item.atUniversity) fail(`nearby options for ${reqId}, which is not a Miramar no-articulation item`);
+  if (!item) fail("nearby options reference unknown requirement " + reqId);
+  else if (item.courseIds.length || item.atUniversity) fail("nearby options for " + reqId + ", which is not a no-articulation item");
   for (const option of options) {
-    if (!nearbyIds.has(option.college)) fail(`nearby option for ${reqId} uses unchecked college "${option.college}"`);
-    if (!option.courses?.length || option.courses.some((c) => !c.code || !c.title || !c.units)) fail(`nearby option for ${reqId} at ${option.college} has incomplete courses`);
+    if (!nearbyIds.has(option.college)) fail("nearby option for " + reqId + " uses unchecked college " + option.college);
+    if (!option.courses?.length || option.courses.some((c) => !c.code || !c.title || !c.units)) fail("nearby option for " + reqId + " at " + option.college + " has incomplete courses");
   }
 }
 const workflow = read("dist/workflow.js");
-for (const label of ["Required · Group A", "Required · Group B", "Highly recommended", "MIRAMAR COURSE", "BERKELEY EQUIVALENT"]) {
-  if (!workflow.includes(label)) fail(`guided agreement workflow is missing "${label}"`);
+for (const label of ["function agreementStages(", "function agreementSectionHTML(", "MIRAMAR COURSE", " EQUIVALENT"]) {
+  if (!workflow.includes(label)) fail("guided agreement workflow is missing " + label);
 }
 if (!workflow.includes("data-agreement-next") || !workflow.includes("data-agreement-back")) fail("guided agreement workflow has no next/back controls");
 
