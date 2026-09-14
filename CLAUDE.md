@@ -117,7 +117,8 @@ requirements Miramar cannot articulate); every other destination shows "not calc
 illustrative or unverified matches, and never label registered or planned work as finished.
 
 The "Your next best move" card (`nextMove()` in `app.js`) sits in the destinations column
-after the schools. It suggests one course that isn't completed yet (not added, planned or
+after the schools, as a light-blue box. Each destination row inside it shows the Transfer
+Efficiency change and that agreement's articulation note with a source link. It suggests one course that isn't completed yet (not added, planned or
 registered, tagged accordingly) and ranks by how many completed required decisions finishing it
 would add where a complete agreement exists (shown as "Completing it: a% → b%"), then
 by source-linked and illustrative matches at other destinations; ties keep the agreement's

@@ -305,3 +305,19 @@
 .target-card .coverage-card{margin:0 12px 12px}
 /* The district note now holds only the official search link. */
 .district-note{display:flex;justify-content:flex-end}
+/* Header without navigation links: keep the plan profile on the right. */
+.workspace-header>.brand{margin-right:auto}
+/* Next best move: light-blue card; each school box holds its efficiency change and agreement note. */
+.pathways .recommendation{background:#eaf4ff;border-color:#bcd9f7}
+.pathways .recommendation .next-map{display:block;padding:11px 13px;background:#fff;border-color:#cfe3f8}
+.next-map-head{display:flex;align-items:center;gap:10px;min-width:0}
+.next-map-head>span:last-child{min-width:0}
+.pathways .recommendation .next-map p{max-width:none}
+.pathways .recommendation .next-map .next-why{margin:9px 0 0;font-size:12.5px;font-weight:600;line-height:1.5;color:#245a9c}
+.pathways .recommendation .next-map .next-note{margin:5px 0 0;font-size:12.5px;line-height:1.55;color:#4d6480}
+.next-note strong{color:#18273f;font-weight:650}
+.next-note a{color:#245a9c;font-weight:600;white-space:nowrap}
+.pathways .recommendation .button.lime{background:#fff;border:1px solid #9cc7f2;color:#18273f}
+.pathways .recommendation .button.lime:hover{background:#f4f9ff}
+.pathways .recommendation .next-course .next-status.none{background:#fff}
+.next-map .next-note strong{display:inline;font-size:inherit;overflow-wrap:normal}
