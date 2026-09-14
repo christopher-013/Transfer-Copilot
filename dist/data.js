@@ -179,6 +179,25 @@ const COURSES = [
     ]
   }
 ];
+const MIRAMAR_UCB_CS_SOURCE = "https://www.assist.org/transfer/results?year=76&institution=45&agreement=79&agreementType=to&viewAgreementsOptions=true&view=agreement&viewBy=major&viewSendingAgreements=false&viewByKey=76%2F45%2Fto%2F79%2FMajor%2F18bc32d8-6aa4-47cc-aced-08ddbf3f4ee7";
+const MIRAMAR_UCB_CS_COURSES = [
+  {id:"miramar_math150",code:"MATH 150",title:"Calculus with Analytic Geometry I",units:5,category:"Math",college:"San Diego Miramar College",schoolId:"miramar",catalogYear:"2025–26 ASSIST",source:MIRAMAR_UCB_CS_SOURCE,sourceDate:"2026-09-13",targets:["ucb"],transferability:["UC","CSU"],assist:{targetId:"ucb",receiving:"MATH 51",receivingTitle:"Calculus I",requirementId:"ucb_math51"}},
+  {id:"miramar_math151",code:"MATH 151",title:"Calculus with Analytic Geometry II",units:4,category:"Math",college:"San Diego Miramar College",schoolId:"miramar",catalogYear:"2025–26 ASSIST",source:MIRAMAR_UCB_CS_SOURCE,sourceDate:"2026-09-13",targets:["ucb"],transferability:["UC","CSU"],assist:{targetId:"ucb",receiving:"MATH 52",receivingTitle:"Calculus II",requirementId:"ucb_math52"}},
+  {id:"miramar_math254",code:"MATH 254",title:"Introduction to Linear Algebra",units:3,category:"Math",college:"San Diego Miramar College",schoolId:"miramar",catalogYear:"2025–26 ASSIST",source:MIRAMAR_UCB_CS_SOURCE,sourceDate:"2026-09-13",targets:["ucb"],transferability:["UC","CSU"],assist:{targetId:"ucb",receiving:"MATH 54",receivingTitle:"Linear Algebra and Differential Equations",requirementId:"ucb_math54",programNote:"This articulation requires both MATH 254 and MATH 255."}},
+  {id:"miramar_math255",code:"MATH 255",title:"Differential Equations",units:3,category:"Math",college:"San Diego Miramar College",schoolId:"miramar",catalogYear:"2025–26 ASSIST",source:MIRAMAR_UCB_CS_SOURCE,sourceDate:"2026-09-13",targets:["ucb"],transferability:["UC","CSU"],assist:{targetId:"ucb",receiving:"MATH 54",receivingTitle:"Linear Algebra and Differential Equations",requirementId:"ucb_math54",programNote:"This articulation requires both MATH 254 and MATH 255."}}
+];
+const MIRAMAR_UCB_CS_AGREEMENT = {
+  id:"miramar-ucb-cs-ba-2025-26",schoolId:"miramar",sending:"San Diego Miramar College",targetId:"ucb",receiving:"UC Berkeley",program:"Computer Science, B.A.",year:"2025–26",published:"August 28, 2026",source:MIRAMAR_UCB_CS_SOURCE,
+  requirements:[
+    {id:"ucb_math51",section:"Required for admission",receivingCode:"MATH 51",receivingTitle:"Calculus I",logic:"one",minCourses:1,courseIds:["miramar_math150"]},
+    {id:"ucb_math52",section:"Required for admission",receivingCode:"MATH 52",receivingTitle:"Calculus II",logic:"one",minCourses:1,courseIds:["miramar_math151"]},
+    {id:"ucb_math54",section:"Required for admission",receivingCode:"MATH 54",receivingTitle:"Linear Algebra and Differential Equations",logic:"all",minCourses:2,courseIds:["miramar_math254","miramar_math255"]},
+    {id:"ucb_compsci70",section:"Highly recommended",receivingCode:"COMPSCI 70",receivingTitle:"Discrete Mathematics and Probability Theory",logic:"unavailable",minCourses:0,courseIds:[],noArticulationReason:"This course must be taken at the university after transfer."}
+  ]
+};
+const ALL_COURSES = [...COURSES,...MIRAMAR_UCB_CS_COURSES];
+function activeAssistAgreement(){return PLAN.college==="miramar"&&isCS()&&PLAN.targetIds.has("ucb")?MIRAMAR_UCB_CS_AGREEMENT:null}
+function activeCourses(){return activeAssistAgreement()?MIRAMAR_UCB_CS_COURSES:COURSES}
 const SOURCES = {
   "catalog": "https://www.sdccd.edu/docs/ISPT/instsrv/Catalogs/MetaFiles/2026_2027/Mesa2026_2027.pdf",
   "classSearch": "https://www.sdccd.edu/students/class-search/search.html",
