@@ -99,14 +99,15 @@ anywhere say so and list the colleges checked.
 
 The dashboard's Your Destinations panel shows a Transfer Efficiency ring per destination
 (`requirementCoverage()` / `coverageRingHTML()` in `app.js`): the share of that agreement's
-required decisions covered by the plan, split Completed / Registered / Planning / not yet
-planned. It is only computed from a complete source-linked agreement (today Miramar → UC
+required decisions that are **completed**. Registered and planned decisions are drawn lighter in
+the ring and labeled "not counted"; only completed work moves the percentage. It is only computed from a complete source-linked agreement (today Miramar → UC
 Berkeley CS); every other destination shows "not calculated". Never derive a percentage from
 illustrative or unverified matches, and never label registered or planned work as finished.
 
-The "Your next best move" card (`nextMove()` in `app.js`) only suggests courses not yet in
-the plan. It ranks them by how many required decisions they add at destinations with a
-complete agreement (the ring's increase, shown as "Transfer Efficiency at X: a% → b%"), then
+The "Your next best move" card (`nextMove()` in `app.js`) sits in the destinations column
+after the schools. It suggests one course that isn't completed yet (not added, planned or
+registered, tagged accordingly) and ranks by how many completed required decisions finishing it
+would add where a complete agreement exists (shown as "Completing it: a% → b%"), then
 by source-linked and illustrative matches at other destinations; ties keep the agreement's
 course order (so the calculus sequence comes first). A course
 that adds nothing (e.g. MATH 255 when CS accepts MATH 254 alone) is never recommended.

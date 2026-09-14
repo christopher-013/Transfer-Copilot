@@ -232,7 +232,7 @@
 /* Section labels are the section headings now (taglines removed); keep the small eyebrow look. */
 .section-heading h2.eyebrow{margin:0;font-size:12px;line-height:1.4;letter-spacing:1.5px;font-weight:700;color:#798395}
 /* Compact next-best-move card: one course, where it maps, and the Transfer Efficiency change it would make. */
-.overview-grid>.recommendation{align-self:start;padding:22px 24px}
+.pathways .recommendation{margin-top:18px;padding:22px 24px}
 .recommendation .recommendation-top h2{margin:0;font-size:12px;line-height:1.3;letter-spacing:1.1px;font-weight:650;text-transform:uppercase;color:#b9c6d9}
 .recommendation .recommendation-top .spark{font-size:18px}
 .next-course{margin-top:14px}
@@ -249,3 +249,11 @@
 .recommendation .next-empty{margin:14px 0 4px;max-width:none;font-size:14px;line-height:1.5;color:#d6eaff}
 .recommendation .button.lime{width:100%;margin-top:8px}
 .recommendation .recommendation-note{margin-top:10px}
+/* Single-column destinations: schools first, then the next-best-move card. Completed-only Transfer Efficiency cues. */
+#overview .overview-grid{grid-template-columns:1fr}
+.coverage-legend .not-counted,.coverage-legend .not-counted strong{color:#7b8798;font-weight:500}
+.coverage-legend .not-counted i{outline:1px dashed #9aa8ba;outline-offset:1px}
+.next-course .next-status{display:inline-block;margin-top:9px;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:650;color:#fff}
+.next-course .next-status.none{background:#ffffff1f;color:#d6eaff}
+.next-course .next-status.registered{background:#2f6db5}
+.next-course .next-status.planning{background:#8f6519}
