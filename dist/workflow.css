@@ -7,4 +7,20 @@
 @media(min-width:1400px){.onboard-layout{max-width:1240px;grid-template-columns:310px 1fr;gap:95px}.onboard-main{padding:42px}}
 @media(max-width:1100px){.campus-options{grid-template-columns:1fr}.wizard-course-row{gap:10px}.course-status-strip{gap:15px}.course-status-strip>p{margin-left:0;flex-basis:100%}.topbar{gap:15px}.topbar>span{display:none}.topbar>div{width:100%;justify-content:flex-end}.dashboard-status{min-width:115px}.course-table td:first-child{min-width:140px}}
 @media(max-width:680px){.campus-options{grid-template-columns:1fr}.campus-search-row{flex-wrap:wrap}.campus-search-row .search-field{flex-basis:100%}.campus-group legend span{font-size:12px}.wizard-course-row{align-items:flex-start;flex-direction:column;gap:12px}.status-select-label,.status-select-label select{width:100%}.wizard-actions .button{white-space:normal;text-align:center}.onboard-header>div .demo-tag{font-size:12px}.onboard-header>div{flex-direction:column;align-items:flex-end;gap:4px}.onboard-header .button{font-size:12px;padding:4px 0}.course-status-strip{padding:15px;gap:13px}.course-status-strip>div{font-size:13px;flex:1;flex-wrap:wrap;min-width:80px}.course-status-strip small{margin-left:14px;flex-basis:100%}.course-status-strip strong{font-size:22px}.course-status-strip>p{line-height:1.6}.page-heading h1{font-size:29px}.topbar>div{justify-content:space-between;gap:4px}.topbar .demo-tag{display:none}.topbar .button{font-size:12px;padding:8px}.segmented{flex-wrap:wrap}.segmented button{font-size:12px;padding:8px;flex:1;min-width:85px}.target-detail-list>div,.evidence-rows>div{align-items:flex-start;flex-direction:column;gap:9px}.target-name small{font-size:12px}.applicability-table th,.applicability-table td{min-width:190px;padding:14px}.applicability-table th:first-child{min-width:145px}.applicability-table th:first-child .course-title strong{font-size:13px}.dashboard-status{font-size:13px;min-width:111px}.course-table td:first-child{min-width:136px}}
-
+/* Horizontal workflow progress */
+.workflow-shell{max-width:960px;margin:20px auto 60px;padding:0 30px}
+.workflow-progress{margin:0 0 30px;padding:24px 12px;background:#fff;border:1px solid var(--line);border-radius:18px}
+.workflow-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.workflow-steps li{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;min-width:0;color:#64748b}
+.workflow-steps li:not(:last-child)::after{content:"";position:absolute;top:21px;left:calc(50% + 29px);width:calc(100% - 58px);height:2px;background:#e1e7ef}
+.workflow-steps li.done::after{background:#a9d66b}
+.workflow-number{display:grid;place-items:center;width:44px;height:44px;border:2px solid #dce3ed;border-radius:50%;background:#fff;font-size:16px;font-weight:650}
+.workflow-steps .current{color:#18273f}
+.workflow-steps .current .workflow-number{background:#18273f;border-color:#18273f;color:#c0ef6d;box-shadow:0 0 0 5px #eff4e8}
+.workflow-steps .done .workflow-number{background:#e8f3dc;border-color:#a9d66b;color:#3d6126}
+.workflow-label{font-size:15px;font-weight:600;line-height:1.4}
+.workflow-label small{display:block;font-size:12px;font-weight:400;color:#68788e;margin-top:5px}
+.workflow-steps .current small{color:#40572d;font-weight:600}
+.workflow-steps .done small{color:#476932}
+.workflow-disclaimer{font-size:12px;line-height:1.7;text-align:center;color:#68788e;margin:22px 10px}
+@media(max-width:680px){.workflow-shell{padding:0 16px;margin-top:12px}.workflow-progress{padding:19px 5px;margin-bottom:20px;border-radius:14px}.workflow-number{width:36px;height:36px;font-size:14px}.workflow-steps li{gap:10px}.workflow-steps li:not(:last-child)::after{top:17px;left:calc(50% + 23px);width:calc(100% - 46px)}.workflow-label{font-size:12px;overflow-wrap:anywhere}.workflow-label small{font-size:12px;margin-top:4px}.workflow-shell .onboard-main{padding:24px 20px}.workflow-disclaimer{margin:20px 0}}
