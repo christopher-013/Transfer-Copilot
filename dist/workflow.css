@@ -56,7 +56,7 @@
 .status-option.clear{padding:9px 12px;border-color:#dce3ed;color:#6b7c93}
 .status-none .status-option.clear{display:none}
 @media(prefers-reduced-motion:reduce){.course-tile,.status-drawer,.course-tile.open .status-drawer{transition:none}}
-@media(max-width:680px){.course-pick{flex-direction:column;align-items:flex-start;gap:10px}.status-drawer{left:0;justify-content:center;gap:6px;padding:0 10px;border-left:0}.status-option{flex:1;min-width:0;padding:9px 4px;font-size:13px}.status-option.clear{flex:0 0 auto;padding:9px 11px}}
+@media(max-width:680px){.course-pick,.receiving-course{flex-direction:column;align-items:flex-start;gap:10px}.status-drawer{left:0;justify-content:center;gap:6px;padding:0 10px;border-left:0}.status-option{flex:1;min-width:0;padding:9px 4px;font-size:13px}.status-option.clear{flex:0 0 auto;padding:9px 11px}}
 /* ASSIST agreement layout: lettered groups, receiving courses, and/or logic */
 .agreement-group{border-top:1px solid #e9eef5;margin-top:16px;padding-top:14px}
 .agreement-group-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:4px}
@@ -103,26 +103,27 @@
 .agreement-group-head .requirement-decision{font-size:13px;color:#728198;margin:3px 0 0;min-width:0}
 .group-letter{width:42px;height:42px;border-radius:11px;background:#7d36a3;color:#fff;font-size:19px;box-shadow:inset 0 0 0 4px #a75bc4}
 .agreement-item{margin:12px 0 0;border:1px solid #e0e6ef;border-radius:13px;overflow:hidden;background:#fbfcfe}
-.articulation-map{display:grid;grid-template-columns:minmax(0,.9fr) 68px minmax(0,1.35fr);align-items:stretch}
+.articulation-map{display:grid;grid-template-columns:minmax(0,1fr) 68px minmax(0,1fr);align-items:stretch;background:#f5f7fa}
 .receiving-course,.requirement-courses{min-width:0;padding:18px;margin:0}
-.receiving-course{display:grid;grid-template-columns:auto 1fr;align-content:center;align-items:center;column-gap:10px;row-gap:4px;background:#fff}
-.receiving-course .school-mark{grid-row:2 / span 2;width:31px;height:31px}
-.receiving-course strong{grid-column:2;font-size:17px;color:#5c156e}
-.receiving-course>span:not(.map-side-label):not(.requirement-state){grid-column:2;font-size:13px;line-height:1.45;color:#52677f}
-.receiving-course small{grid-column:2;font-size:11px;color:#8793a4}
-.receiving-course .item-state{grid-column:1 / -1;margin:8px 0 0;width:max-content}
+/* College course (left) and university equivalent (right) are one box size: same inner layout, both stretch to the row height. */
+.receiving-course{display:flex;flex-wrap:nowrap;align-items:center;align-self:stretch;gap:16px;min-height:136px;margin:18px;padding:15px 18px 15px 16px;border:1px solid #c8d5e5;border-left:5px solid #3769b2;border-radius:11px;background:#fff;font-size:14px}
+.receiving-course .course-pick-text strong{color:#18273f}
+.receiving-course .item-state{flex-shrink:0;margin:0}
 .map-side-label{grid-column:1 / -1;font-size:10px;letter-spacing:1px;font-weight:750;color:#8090a4;margin-bottom:5px}
 .mapping-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#eff3f8;color:#2354bf;border-left:1px solid #dce4ed;border-right:1px solid #dce4ed}
 .mapping-arrow span{font-size:31px;line-height:1}
 .mapping-arrow small{font-size:9px;text-transform:uppercase;letter-spacing:.7px;margin-top:4px;color:#71839a}
 .requirement-courses{display:flex;flex-direction:column;justify-content:center;background:#f5f7fa}
 .requirement-courses .course-tile{margin:0;background:#fff}
-.mapped-course-option{min-width:0}
+.requirement-courses .course-tile{flex:1;display:flex;flex-direction:column}
+.requirement-courses .course-pick{flex:1;min-height:136px}
+.course-pick-text>.course-side-label{display:block;font-size:10px;line-height:1.35;letter-spacing:1px;font-weight:750;color:#8090a4;margin:0 0 7px}
+.mapped-course-option{min-width:0;flex:1;display:flex;flex-direction:column}
 .course-role{display:inline-block;margin:0 0 6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:750;letter-spacing:.2px}
 .course-role.accepted{background:#e5f1d9;color:#416226}
 .course-role.published-pair{background:#eceff4;color:#66778c}
 .agreement-item .agreement-note{margin:0;border-radius:0;border-top:1px solid #cdddf0;padding:12px 18px;background:#edf5ff;color:#385b84}
-.agreement-item .no-articulation{padding:14px;border:1px dashed #cbd4df;border-radius:9px;background:#fff;color:#6d7d92}
+.agreement-item .no-articulation{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:136px;margin:0;padding:15px 18px 15px 16px;border:1px dashed #cbd4df;border-radius:11px;background:#fff;color:#6d7d92}
 .agreement-item .no-articulation strong{display:block;color:#485f7b;font-size:14px;margin:3px 0}
 .agreement-item .no-articulation p{font-size:12px;line-height:1.5}
 .agreement-group>.logic-divider.or{margin:18px 0 6px;color:#7d36a3}
@@ -141,4 +142,4 @@
 .review-totals{display:flex;gap:10px;flex-wrap:wrap;padding:16px 19px;border-top:1px solid #e5eaf1;background:#f8fafe}
 .review-totals span{padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #e1e7ef;color:#687a91;font-size:12px}
 .review-totals strong{color:#18273f;font-size:16px;margin-right:4px}
-@media(max-width:760px){.articulation-map{grid-template-columns:1fr}.mapping-arrow{flex-direction:row;gap:7px;padding:8px;border:0;border-top:1px solid #dce4ed;border-bottom:1px solid #dce4ed}.mapping-arrow span{transform:rotate(-90deg);font-size:25px}.mapping-arrow small{margin:0}.agreement-group{padding:16px}.assist-requirement-head{padding:18px}.agreement-actions{align-items:stretch;flex-direction:column-reverse}.agreement-actions .button,.agreement-actions .button.navy{max-width:none;width:100%;justify-content:center}.review-row{grid-template-columns:30px minmax(0,1fr) auto}.review-row .requirement-state{grid-column:2}.review-row>span:last-child{grid-column:3;grid-row:1 / span 2}.agreement-item .status-drawer{position:relative;transform:none;visibility:visible;box-shadow:none;border-top:1px solid #e5eaf1;padding:10px;display:none}.agreement-item .course-tile.open .status-drawer{display:flex}.agreement-item .course-tile.open{overflow:visible}.agreement-item .course-pick{padding:13px}}
+@media(max-width:760px){.articulation-map{grid-template-columns:1fr}.mapping-arrow{flex-direction:row;gap:7px;padding:8px;border:0;border-top:1px solid #dce4ed;border-bottom:1px solid #dce4ed}.mapping-arrow span{transform:rotate(90deg);font-size:25px}.mapping-arrow small{margin:0}.receiving-course{margin:18px;padding:13px}.agreement-group{padding:16px}.assist-requirement-head{padding:18px}.agreement-actions{align-items:stretch;flex-direction:column-reverse}.agreement-actions .button,.agreement-actions .button.navy{max-width:none;width:100%;justify-content:center}.review-row{grid-template-columns:30px minmax(0,1fr) auto}.review-row .requirement-state{grid-column:2}.review-row>span:last-child{grid-column:3;grid-row:1 / span 2}.agreement-item .status-drawer{position:relative;transform:none;visibility:visible;box-shadow:none;border-top:1px solid #e5eaf1;padding:10px;display:none}.agreement-item .course-tile.open .status-drawer{display:flex}.agreement-item .course-tile.open{overflow:visible}.agreement-item .course-pick{padding:13px}}

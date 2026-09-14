@@ -106,7 +106,7 @@ for (const course of MIRAMAR_UCB_CS_COURSES) {
   if (!agreementItems.some((item) => item.courseIds?.includes(course.id))) fail(`Miramar course ${course.id} is not placed in any agreement item`);
 }
 const workflow = read("dist/workflow.js");
-for (const label of ["Required · Group A", "Required · Group B", "Highly recommended", "Review", "BERKELEY REQUIREMENT", "MIRAMAR EQUIVALENT"]) {
+for (const label of ["Required · Group A", "Required · Group B", "Highly recommended", "Review", "MIRAMAR COURSE", "BERKELEY EQUIVALENT"]) {
   if (!workflow.includes(label)) fail(`guided agreement workflow is missing "${label}"`);
 }
 if (!workflow.includes("data-agreement-next") || !workflow.includes("data-agreement-back")) fail("guided agreement workflow has no next/back controls");
