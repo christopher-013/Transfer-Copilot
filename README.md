@@ -62,7 +62,7 @@ Student history is entered by the demo visitor, not preloaded. Only seven Mesa c
 ## Validation performed
 
 - `node scripts/check.mjs` passes: JavaScript syntax, asset-path integrity, agreement/course ID integrity, export coverage, and no hardcoded sample figures in shipped markup.
-- Playwright smoke tests cover Miramar → Berkeley/UCLA, grouped choices, course status, Transfer Completion, Transfer Efficiency, multi-school mapping and the mobile Coursework layout. CI runs both checks before a Pages deploy.
+- Playwright smoke tests cover Miramar → Berkeley/UCLA, grouped choices, course status, Transfer Completion, the 0–100 Transfer Efficiency score, the separate review/export flow, collapsed class offerings, multi-school mapping and the mobile Coursework layout. CI runs both checks before a Pages deploy.
 - Desktop and 390px mobile layout checked; no document-level horizontal overflow.
 - Tested onboarding through personalized results, separate status totals, balanced/lighter/original selections, edit/cancel, reset, search, sharing and source scope labels.
 - No browser runtime errors observed.

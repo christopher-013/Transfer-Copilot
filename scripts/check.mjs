@@ -136,12 +136,13 @@ for (const [reqId, options] of Object.entries(NEARBY_UCB_CS.options ?? {})) {
   }
 }
 const workflow = read("dist/workflow.js");
-for (const label of ["function agreementStages(", "section.groups.map", "function agreementSectionHTML(", "MIRAMAR COURSE", " EQUIVALENT", "reviewExportHTML()", "workflow-progress"]) {
+for (const label of ["function agreementStages(", "section.groups.map", "function agreementSectionHTML(", "MIRAMAR COURSE", " EQUIVALENT", "function reviewFrame(", "workflow-progress"]) {
   if (!workflow.includes(label)) fail("guided agreement workflow is missing " + label);
 }
 if (!workflow.includes("data-agreement-next") || !workflow.includes("data-agreement-back")) fail("guided agreement workflow has no next/back controls");
 const app = read("dist/app.js");
-for (const label of ["Transfer Completion", "efficiencyScore", "points/c.units", "data-action=\"why\""]) if (!app.includes(label)) fail("decision scoring is missing " + label);
+for (const label of ["Transfer Completion", "efficiencyScore", "coverage*.7", "unitValue*.3", "function efficiencyRating", "data-action=\"why\"", "details class=\"schedule\""]) if (!app.includes(label)) fail("decision scoring is missing " + label);
+if (workflow.includes("workflow-review") || workflow.includes("PLAN.step=5")) fail("review/export must remain outside the four-step onboarding workflow");
 const exportSource = read("dist/export.js");
 for (const label of ["buildExportSnapshot", "exportMarkdown", "exportDocx", "exportXlsx", "printPlan", "data-export-format"]) if (!exportSource.includes(label)) fail("review/export is missing " + label);
 

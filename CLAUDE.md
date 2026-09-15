@@ -117,12 +117,14 @@ requirements Miramar cannot articulate); every other destination shows "not calc
 illustrative or unverified matches, and never label registered or planned work as finished.
 
 The "Your next best move" card (`nextMove()` in `app.js`) sits after the schools as a light-blue
-box. Transfer Efficiency is a course-level score: required decisions earn 3 points, other
-source-linked destination relationships earn 2, and illustrative relationships earn 1; the total
-is divided by course units. Each destination row shows the Transfer Completion change and the
-agreement note with a source link. It suggests one course that isn't completed yet (not added,
-planned or registered, tagged accordingly) and ranks by this per-unit score, destination reach and
-required-decision gain. A course
+box. Transfer Efficiency is a 0–100 course-level planning score. Destination reach supplies 70%
+of the score. The other 30% measures articulation value per unit: required decisions earn 3
+evidence points, other source-linked destination relationships earn 2, and illustrative
+relationships earn 1. The interface labels 85–100 Excellent, 70–84 Strong, 50–69 Moderate and
+0–49 Limited, and always says this is not an admission probability. Each destination row shows
+the Transfer Completion change and the agreement note with a source link. It suggests one course
+that isn't completed yet (not added, planned or registered, tagged accordingly) and ranks by this
+score, destination reach and required-decision gain. A course
 that adds nothing (e.g. MATH 255 when CS accepts MATH 254 alone) is never recommended.
 
 Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
@@ -132,10 +134,12 @@ section reuses the same tiles for planning and not-added courses that a selected
 still needs (`neededCourseIds()`: counted requirements not yet completed; a "choose one" group
 with a planned or registered pick only needs that pick), each mapped to every selected school
 with `courseMapRowHTML()`. There are no scenario presets. Find your next class lists every
-not-completed course with up to three `SDCCD_SCHEDULE` sections
-(home college first) and a link to the rest in the SDCCD class search. Refreshing that snapshot
+not-completed course. Its `SDCCD_SCHEDULE` sections are collapsed behind a `+` disclosure by
+default; expanding shows up to three sections (home college first) and a link to the rest in the
+SDCCD class search. Refreshing that snapshot
 is a manual read of the public search page for the 31 course codes.
 
-The final review stage uses one versioned in-browser snapshot for working Markdown, DOCX and XLSX
-downloads plus a print/save-PDF report. No export is sent to a server. Playwright smoke tests cover
+Review and export is a separate workflow launched from the dashboard's `Review & export` action;
+it is not a fifth onboarding step. It uses one versioned in-browser snapshot for working Markdown,
+DOCX and XLSX downloads plus a print/save-PDF report. No export is sent to a server. Playwright smoke tests cover
 the Miramar → Berkeley/UCLA flow on desktop and the Coursework layout on mobile.
