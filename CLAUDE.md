@@ -119,7 +119,9 @@ requirements Miramar cannot articulate); every other destination shows "not calc
 illustrative or unverified matches, and never label registered or planned work as finished.
 
 The "Your next best move" card (`nextMove()` in `app.js`) sits after the schools as a light-blue
-box. Transfer Efficiency is a 0–100 course-level planning score. Destination reach supplies 70%
+box. The suggested course stays on the left and a circular Transfer Efficiency gauge sits on the
+right, pairing the score out of 100 with its recommendation label. Transfer Efficiency is a
+0–100 course-level planning score. Destination reach supplies 70%
 of the score. The other 30% measures articulation value per unit: required decisions earn 3
 evidence points, other source-linked destination relationships earn 2, and illustrative
 relationships earn 1. The interface labels 85–100 Excellent, 70–84 Strong, 50–69 Moderate and
@@ -128,6 +130,9 @@ the Transfer Completion change and the agreement note with a source link. It sug
 that isn't completed yet (not added, planned or registered, tagged accordingly) and ranks by this
 score, destination reach and required-decision gain. A course
 that adds nothing (e.g. MATH 255 when CS accepts MATH 254 alone) is never recommended.
+
+The setup flow uses one centered task card with a compact `STEP 0X / 04` marker. It intentionally
+has no progress rail or left-side step navigation.
 
 Course statuses in the wizard are set with course tiles (`wizardCourseRow()` in
 `workflow.js`): selecting a tile slides a Completed / Registered / Planning panel in from the

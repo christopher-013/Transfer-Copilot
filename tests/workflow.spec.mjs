@@ -1,19 +1,34 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
-async function reachCoursework(page) {
+async function reachCoursework(page, includeUCLA = true) {
   await page.goto("/");
-  await expect(page.getByRole("navigation", { name: "Transfer planning progress" })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Transfer planning progress" })).toHaveCount(0);
   await page.locator("label.school-tile", { hasText: "San Diego Miramar College" }).click();
   await page.getByRole("button", { name: /Choose my destinations/ }).click();
   await page.locator("label.school-tile", { hasText: "UC Berkeley" }).click();
-  await page.locator("label.school-tile", { hasText: "UCLA" }).click();
+  if (includeUCLA) await page.locator("label.school-tile", { hasText: "UCLA" }).click();
   await page.getByRole("button", { name: /Choose my major/ }).click();
   await page.getByLabel("Intended major").fill("Computer Science");
   await page.getByRole("button", { name: /Add my coursework/ }).click();
-  await expect(page.locator(".workflow-steps .current")).toContainText("Coursework");
+  await expect(page.locator("#onboarding-main>.eyebrow")).toHaveText("STEP 04 / 04");
   await expect(page.getByRole("navigation", { name: "ASSIST agreement workflow" })).toBeVisible();
 }
+
+test("single-destination recommendations use the visual score gauge", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.includes("mobile"), "Covered by the focused mobile test");
+  await reachCoursework(page, false);
+  const math150 = page.locator('[data-course-tile="miramar_math150"]').first();
+  await math150.getByRole("button", { name: /MATH 150/ }).click();
+  await math150.getByRole("button", { name: "Completed" }).click();
+  await page.locator(".agreement-journey button").last().click();
+  await page.getByRole("button", { name: /See my transfer plan/ }).click();
+  await expect(page.locator(".efficiency-dial")).toHaveAttribute("aria-label", /\d+ out of 100, Strong recommendation/);
+  await expect(page.locator(".efficiency-dial strong")).toHaveText(/^\d{1,3}$/);
+  await expect(page.locator(".efficiency-verdict strong")).toHaveText("STRONG");
+  const math151Score = await page.evaluate(() => courseCandidates().find(item => item.c.code === "MATH 151").efficiencyScore);
+  expect(math151Score).toBe(77);
+});
 
 test("Miramar to Berkeley and UCLA supports grouped decisions, completion and efficiency", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name.includes("mobile"), "Covered by the focused mobile test");
@@ -27,8 +42,9 @@ test("Miramar to Berkeley and UCLA supports grouped decisions, completion and ef
   await page.locator(".agreement-journey button").last().click();
   await page.getByRole("button", { name: /See my transfer plan/ }).click();
   await expect(page.getByText("Transfer Efficiency", { exact: true })).toBeVisible();
-  await expect(page.locator(".efficiency-score>strong")).toHaveText(/^\d{1,3}$/);
-  await expect(page.locator(".efficiency-score>small")).toContainText("/100");
+  await expect(page.locator(".efficiency-dial strong")).toHaveText(/^\d{1,3}$/);
+  await expect(page.locator(".efficiency-dial span")).toHaveText("/100");
+  await expect(page.locator(".efficiency-verdict")).toContainText(/recommendation/i);
   await expect(page.locator(".efficiency-summary")).toContainText("transfer leverage");
   await page.getByRole("button", { name: /What this score means/ }).click();
   await expect(page.getByText("85–100")).toBeVisible();
@@ -62,11 +78,11 @@ test("Miramar to Berkeley and UCLA supports grouped decisions, completion and ef
   await pdfReport.close();
   await page.getByRole("button", { name: /Back to my transfer plan/ }).click();
   await expect(page.getByText("Transfer Efficiency", { exact: true })).toBeVisible();
-  await expect(page.locator(".efficiency-score>strong")).toHaveText(/^\d{1,3}$/);
+  await expect(page.locator(".efficiency-dial strong")).toHaveText(/^\d{1,3}$/);
   await expect(page.locator(".efficiency-summary")).toContainText("selected destinations");
-  const recommendationBefore = await page.locator(".next-course>strong").textContent() + ":" + await page.locator(".efficiency-score>strong").textContent();
+  const recommendationBefore = await page.locator(".next-course>strong").textContent() + ":" + await page.locator(".efficiency-dial strong").textContent();
   await page.evaluate(() => setCourseStatus(nextMove().c.id, "completed"));
-  const recommendationAfter = await page.locator(".next-course>strong").textContent() + ":" + await page.locator(".efficiency-score>strong").textContent();
+  const recommendationAfter = await page.locator(".next-course>strong").textContent() + ":" + await page.locator(".efficiency-dial strong").textContent();
   expect(recommendationAfter).not.toBe(recommendationBefore);
   const mapping = page.locator(".fit-row", { hasText: "MATH 150" }).first();
   await expect(mapping.locator(".fit-dest")).toHaveCount(2);
@@ -79,7 +95,7 @@ test("mobile coursework keeps the workflow usable without page overflow", async 
   await reachCoursework(page);
   const sizes = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
   expect(sizes.scroll).toBeLessThanOrEqual(sizes.client + 1);
-  await expect(page.locator(".workflow-steps .current")).toContainText("Coursework");
+  await expect(page.locator("#onboarding-main>.eyebrow")).toHaveText("STEP 04 / 04");
   const map = page.locator(".articulation-map").first();
   const columns = await map.evaluate(el => getComputedStyle(el).gridTemplateColumns.split(" ").length);
   expect(columns).toBe(1);

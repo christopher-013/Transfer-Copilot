@@ -346,26 +346,10 @@
 .fit-destinations,.fit-destinations:has(>:nth-child(2)),.fit-destinations:has(>:nth-child(3)){grid-template-columns:minmax(0,1fr);gap:12px;padding:12px 14px 14px}
 .fit-dest{min-height:0}
 }
-/* Persistent left navigation for the four-step onboarding workflow. */
-.workflow-shell{max-width:1320px;display:grid;grid-template-columns:248px minmax(0,1fr);grid-template-areas:"progress main" "progress disclaimer";gap:0 28px;align-items:start}
-.workflow-progress{grid-area:progress;position:sticky;top:20px;margin:0;padding:20px 16px;border-radius:18px}
-.onboard-main{grid-area:main}
-.workflow-disclaimer{grid-area:disclaimer}
-.workflow-steps{display:flex;flex-direction:column;gap:2px}
-.workflow-steps li{display:block;text-align:left;color:#68788e}
-.workflow-steps li>button,.workflow-steps li>div{position:relative;display:grid;grid-template-columns:42px minmax(0,1fr);gap:12px;align-items:center;width:100%;min-height:70px;padding:8px;border:0;border-radius:12px;background:transparent;color:inherit;text-align:left;font:inherit}
-.workflow-steps li>button{cursor:pointer}
-.workflow-steps li>button:hover{background:#f2f7fd}
-.workflow-steps li>button:focus-visible{outline:3px solid #295bde;outline-offset:1px}
-.workflow-steps li:not(:last-child)::after{top:54px;bottom:-18px;left:28px;width:2px;height:auto;background:#e1e7ef}
-.workflow-steps li.done::after{background:#8cbcf2}
-.workflow-number{width:42px;height:42px;font-size:15px;z-index:1}
-.workflow-label{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:2px 8px;font-size:14px}
-.workflow-label strong{font-size:15px;color:#41546d}
-.workflow-label small{grid-column:1;margin:0;font-size:12px}
-.workflow-label>span{grid-column:2;grid-row:1 / span 2;font-size:11px;color:#8a96a6}
-.workflow-steps .current>div{background:#f1f7ff}
-.workflow-steps .current .workflow-label strong{color:#18273f}
+/* The four-step setup stays focused on one task at a time—no competing progress rail. */
+.workflow-shell{max-width:1180px;margin:24px auto 60px;padding:0 30px;display:block}
+.workflow-shell .onboard-main{max-width:none}
+.workflow-disclaimer{margin:26px 0 0;text-align:center}
 .review-shell{max-width:1040px;margin:34px auto 68px;padding:0 30px}
 /* Each ASSIST group is its own navigable substep. */
 .agreement-journey{scrollbar-width:thin;padding-bottom:8px}
@@ -382,12 +366,24 @@
 .nearby-options[open] summary>span:last-child{transform:rotate(45deg)}
 .nearby-content{padding:0 18px 16px}
 .nearby-options.none .nearby-content{padding-top:0}
-/* Course-level Transfer Efficiency belongs to the recommendation, not the completion ring. */
-.efficiency-score{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 14px;align-items:center;margin:15px 0 4px;padding:14px 16px;border:1px solid #b9d9f8;border-radius:12px;background:#fff}
-.efficiency-score>span{font-size:11px;font-weight:750;letter-spacing:1px;text-transform:uppercase;color:#245a9c}
-.efficiency-score>strong{grid-column:2;grid-row:1 / span 2;font-size:34px;line-height:1;color:#18273f;font-variant-numeric:tabular-nums}
-.efficiency-score>small{font-size:12px;color:#6b7c93}
-.efficiency-score>button{grid-column:1 / -1;justify-self:start;margin-top:5px;padding:0;border:0;background:transparent;color:#245a9c;font-size:12px;font-weight:650;text-decoration:underline;text-underline-offset:3px}
+/* The recommendation and its 0–100 Transfer Efficiency gauge read as one decision. */
+.next-recommendation-head{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:30px;align-items:center;margin-top:14px}
+.next-recommendation-head .next-course{margin:0}
+.efficiency-visual{--gauge:#2f6db5;display:grid;grid-template-columns:112px minmax(0,1fr);grid-template-areas:"label label" "dial verdict" "dial link";gap:5px 16px;align-items:center;padding:15px 17px;border:1px solid #b9d9f8;border-radius:16px;background:linear-gradient(145deg,#fff,#f5f9ff)}
+.efficiency-visual.excellent{--gauge:#3f7b39}
+.efficiency-visual.moderate{--gauge:#a67517}
+.efficiency-visual.limited{--gauge:#9a5960}
+.efficiency-kicker{grid-area:label;font-size:11px;font-weight:750;letter-spacing:1px;text-transform:uppercase;color:#245a9c}
+.efficiency-dial{grid-area:dial;width:108px;height:108px;padding:8px;border-radius:50%;background:conic-gradient(var(--gauge) calc(var(--efficiency)*1%),#dce7f2 0);box-shadow:inset 0 0 0 1px #c8d9e9}
+.efficiency-dial>div{display:grid;place-content:center;width:100%;height:100%;border-radius:50%;background:#fff;text-align:center;box-shadow:0 4px 18px #18365412}
+.efficiency-dial strong{display:block;font-size:32px;line-height:.95;color:#18273f;font-variant-numeric:tabular-nums}
+.efficiency-dial span{display:block;margin-top:4px;font-size:12px;font-weight:650;color:#6b7c93}
+.efficiency-verdict{grid-area:verdict;align-self:end}
+.efficiency-verdict strong,.efficiency-verdict span,.efficiency-verdict small{display:block}
+.efficiency-verdict strong{font-size:15px;letter-spacing:.9px;color:var(--gauge)}
+.efficiency-verdict span{margin-top:1px;font-size:13px;font-weight:650;color:#18273f}
+.efficiency-verdict small{margin-top:2px;font-size:11.5px;line-height:1.3;color:#6b7c93}
+.efficiency-visual>button{grid-area:link;align-self:start;justify-self:start;padding:0;border:0;background:transparent;color:#245a9c;font-size:12px;font-weight:650;text-decoration:underline;text-underline-offset:3px}
 .efficiency-scale{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:18px 0}
 .efficiency-scale span{padding:10px;border:1px solid #dce6f0;border-radius:9px;background:#f7fafd;color:#5f7189;font-size:12px}
 .efficiency-scale strong{display:block;color:#18273f;font-size:13px}
@@ -429,6 +425,6 @@
 .export-grid button strong{font-size:15px}
 .export-grid button span{font-size:12px;line-height:1.45;color:#6b7c93}
 .export-privacy{padding-left:20px;background-image:radial-gradient(circle,#2f6db5 0 3px,transparent 4px);background-position:4px 11px;background-size:8px 8px;background-repeat:no-repeat}
-@media(max-width:900px){.workflow-shell{grid-template-columns:205px minmax(0,1fr);gap:0 18px;padding:0 18px}.workflow-progress{padding:15px 10px}.workflow-steps li>button,.workflow-steps li>div{grid-template-columns:36px minmax(0,1fr);gap:8px}.workflow-number{width:36px;height:36px}.workflow-steps li:not(:last-child)::after{left:26px}.workflow-label>span{display:none}.export-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:680px){.workflow-shell{display:block;padding:0 16px}.workflow-progress{position:static;margin-bottom:18px;overflow-x:auto}.workflow-steps{display:grid;grid-template-columns:repeat(4,minmax(118px,1fr));min-width:500px}.workflow-steps li>button,.workflow-steps li>div{grid-template-columns:34px minmax(0,1fr);min-height:58px;padding:6px}.workflow-steps li:not(:last-child)::after{top:28px;bottom:auto;left:42px;right:-10px;width:auto;height:2px}.workflow-number{width:34px;height:34px}.workflow-label strong{font-size:13px}.workflow-label small{font-size:11px}.review-shell{margin-top:18px;padding:0 16px}.review-summary,.review-efficiency,.efficiency-scale{grid-template-columns:1fr}.export-grid{grid-template-columns:1fr 1fr}.review-course-group{grid-template-columns:90px minmax(0,1fr)}.review-course-group small{grid-column:2}.review-hero h2{font-size:26px}}
+@media(max-width:900px){.workflow-shell{padding:0 18px}.next-recommendation-head{grid-template-columns:minmax(0,1fr) 300px;gap:20px}.export-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.workflow-shell{padding:0 16px;margin-top:12px}.workflow-shell .onboard-main{padding:24px 20px}.next-recommendation-head{grid-template-columns:1fr;gap:18px}.efficiency-visual{grid-template-columns:96px minmax(0,1fr)}.efficiency-dial{width:94px;height:94px}.efficiency-dial strong{font-size:28px}.review-shell{margin-top:18px;padding:0 16px}.review-summary,.review-efficiency,.efficiency-scale{grid-template-columns:1fr}.export-grid{grid-template-columns:1fr 1fr}.review-course-group{grid-template-columns:90px minmax(0,1fr)}.review-course-group small{grid-column:2}.review-hero h2{font-size:26px}}
 @media(max-width:430px){.export-grid{grid-template-columns:1fr}}
