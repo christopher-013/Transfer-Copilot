@@ -27,6 +27,7 @@ by GitHub Pages. Scripts load in order via `defer` and share one global scope:
 - `workflow.js` — `PLAN` state, `COLLEGES`/`CAMPUSES`/`MAJORS`, the 4-step wizard
 - Step 3 keeps the free-text major field and presents the six demo majors as responsive, square selection tiles with visible and screen-reader selection state.
 - The transfer-plan workspace uses the same centered 1180px maximum width as the setup workflow.
+- Large-screen college and destination cards use a roomier 190px minimum column and 158px minimum height.
 - `schedule.js` — dated SDCCD class search snapshot (`SDCCD_SCHEDULE`) for Find your next class
 - `app.js` — dashboard render, evidence dialogs, scenarios, sharing, WebMCP tools
 

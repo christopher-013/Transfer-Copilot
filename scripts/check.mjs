@@ -140,9 +140,12 @@ for (const label of ["function agreementStages(", "section.groups.map", "functio
   if (!workflow.includes(label)) fail("guided agreement workflow is missing " + label);
 }
 for (const label of ["major-tile", "major-mark", "aria-pressed", "syncMajorTiles"]) if (!workflow.includes(label)) fail("major selection tiles are missing " + label);
+if (workflow.includes(">Choose this major<")) fail("major tiles still include redundant helper copy");
 if (!workflow.includes("data-agreement-next") || !workflow.includes("data-agreement-back")) fail("guided agreement workflow has no next/back controls");
 const app = read("dist/app.js");
 for (const label of ["Transfer Completion", "efficiencyScore", "coverage*.7", "unitValue*.3", "function efficiencyRating", "data-action=\"why\"", "details class=\"schedule\""]) if (!app.includes(label)) fail("decision scoring is missing " + label);
+for (const label of ["Course details and availability", "+scheduleHTML(c)", "View course details and availability"]) if (!app.includes(label)) fail("course availability details are missing " + label);
+if (!read("dist/workflow.css").includes("#applicability-matrix .section-heading>.source-pill{display:none}")) fail("the redundant matrix readiness note is still visible");
 if (workflow.includes("workflow-review") || workflow.includes("workflow-progress") || workflow.includes("workflow-steps") || workflow.includes("PLAN.step=5")) fail("the setup must remain a focused four-step flow without a progress rail or embedded export step");
 const exportSource = read("dist/export.js");
 for (const label of ["buildExportSnapshot", "exportMarkdown", "exportDocx", "exportXlsx", "printPlan", "data-export-format"]) if (!exportSource.includes(label)) fail("review/export is missing " + label);
@@ -187,6 +190,7 @@ for (const k of scheduleColleges) if (!SCHOOL_ASSETS[SDCCD_SCHEDULE.colleges[k].
 // 6. Shipped markup must not contain invented sample figures. JS overwrites these
 // containers on render, but the numbers are still fabricated data in a public artifact.
 const html = read("dist/index.html");
+if (html.includes("No complete eligibility or admissions assessment.")) fail("the recommendation still includes the redundant eligibility note");
 const fabricated = [
   [/class="target-row"/, "hardcoded target rows in #target-list"],
   [/\d+\s*<span>\/\s*\d+<\/span>/, "hardcoded progress fraction (e.g. 6 / 10)"],

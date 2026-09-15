@@ -367,8 +367,9 @@
 .nearby-content{padding:0 18px 16px}
 .nearby-options.none .nearby-content{padding-top:0}
 /* The recommendation and its 0–100 Transfer Efficiency gauge read as one decision. */
-.next-recommendation-head{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:30px;align-items:center;margin-top:14px}
+.next-recommendation-head{display:grid;grid-template-columns:minmax(260px,420px) 330px;justify-content:start;gap:20px;align-items:center;margin-top:14px}
 .next-recommendation-head .next-course{margin:0}
+#applicability-matrix .section-heading>.source-pill{display:none}
 .efficiency-visual{--gauge:#2f6db5;display:grid;grid-template-columns:112px minmax(0,1fr);grid-template-areas:"label label" "dial verdict" "dial link";gap:5px 16px;align-items:center;padding:15px 17px;border:1px solid #b9d9f8;border-radius:16px;background:linear-gradient(145deg,#fff,#f5f9ff)}
 .efficiency-visual.excellent{--gauge:#3f7b39}
 .efficiency-visual.moderate{--gauge:#a67517}

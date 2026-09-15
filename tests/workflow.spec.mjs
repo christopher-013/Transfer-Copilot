@@ -4,11 +4,18 @@ import { readFile } from "node:fs/promises";
 async function reachCoursework(page, includeUCLA = true) {
   await page.goto("/");
   await expect(page.getByRole("navigation", { name: "Transfer planning progress" })).toHaveCount(0);
-  await page.locator("label.school-tile", { hasText: "San Diego Miramar College" }).click();
+  const homeSchool = page.locator("label.school-tile", { hasText: "San Diego Miramar College" });
+  if (page.viewportSize().width >= 1100) {
+    const schoolBox = await homeSchool.boundingBox();
+    expect(schoolBox.width).toBeGreaterThanOrEqual(190);
+    expect(schoolBox.height).toBeGreaterThanOrEqual(158);
+  }
+  await homeSchool.click();
   await page.getByRole("button", { name: /Choose my destinations/ }).click();
   await page.locator("label.school-tile", { hasText: "UC Berkeley" }).click();
   if (includeUCLA) await page.locator("label.school-tile", { hasText: "UCLA" }).click();
   await page.getByRole("button", { name: /Choose my major/ }).click();
+  await expect(page.getByText("Choose this major", { exact: true })).toHaveCount(0);
   const majorTile = page.locator(".major-tile", { hasText: "Computer Science" });
   await expect(page.locator(".major-tile")).toHaveCount(6);
   const majorTileBox = await majorTile.boundingBox();
@@ -59,6 +66,16 @@ test("Miramar to Berkeley and UCLA supports grouped decisions, completion and ef
   await expect(page.getByText("85–100")).toBeVisible();
   await expect(page.locator("#detail-dialog").getByText(/not an admission probability/i)).toBeVisible();
   await page.getByRole("button", { name: /Close/ }).click();
+  await page.evaluate(() => setCourseStatus(nextMove().c.id, "planning"));
+  await page.getByRole("button", { name: /View course details and availability/ }).click();
+  await expect(page.getByRole("heading", { name: /Course details and availability/ })).toBeVisible();
+  const courseAvailability = page.locator("#detail-dialog details.schedule");
+  await expect(courseAvailability).toBeVisible();
+  await courseAvailability.locator("summary").click();
+  await expect(courseAvailability.locator(".schedule-head")).toBeVisible();
+  await page.getByRole("button", { name: /Close/ }).click();
+  await expect(page.getByText("Course relationships—not admission readiness", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("No complete eligibility or admissions assessment.", { exact: true })).toHaveCount(0);
   const offering = page.locator("details.schedule:has(.section-row)").first();
   await expect(offering).not.toHaveAttribute("open", "");
   await expect(offering.locator(".section-row").first()).toBeHidden();
