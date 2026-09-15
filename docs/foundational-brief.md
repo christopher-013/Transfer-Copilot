@@ -480,7 +480,7 @@ The governance policy addresses independent third parties, including businesses,
 
 ### 10.2 Questions to obtain in writing
 
-Contact **help@assist.org**, as identified by ASSIST's published data-request process. A short draft inquiry explaining the proposed student-facing application appears in Section 21.2. There is no record that it was sent or that a reply was received. [ASSIST request process](https://resource.assist.org/data)
+Contact **help@assist.org**, as identified by ASSIST's published data-request process. A short draft inquiry explaining the proposed student-facing application appears in Section 21.2. A data request was sent, and ASSIST replied (received by September 15, 2026) with a general status rather than answers to the questions below: work continues on system security, license agreement and fee structure, and terms-of-use legal clearance; system offices (CSUCO, UCOP, CCCCO) and institutions, including participating AICCU institutions, will get priority access (estimated Fall 2026); capacity for all other requestors is still being determined. Under 10.4 this is the "Access delayed" outcome for an independent requestor, with "Institution-sponsored access only" as the nearest realistic path. [ASSIST request process](https://resource.assist.org/data)
 
 Ask:
 

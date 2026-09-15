@@ -34,8 +34,10 @@ oversight — do not add storage without being asked.
 
 ## Non-negotiables
 
-**Never scrape ASSIST.** Agreement data is hand-entered from source-linked snapshots. An
-API request is pending approval. No scheduled fetchers, no background network calls, no
+**Never scrape ASSIST.** Agreement data is hand-entered from source-linked snapshots. There is
+no ASSIST data access and no timeline: ASSIST's September 2026 reply gives system offices and
+institutions priority access (estimated Fall 2026), while license, fees, terms and capacity for
+other requestors are still undetermined. No scheduled fetchers, no background network calls, no
 runtime third-party requests — school marks are bundled locally for this reason.
 
 **Three-way evidence labeling.** `relationship(course, target)` in `app.js` returns
@@ -85,8 +87,8 @@ script enforces this.
 The demo focuses on Miramar → Computer Science. Complete 2025–26 agreements exist for UC
 Berkeley (CS B.A.), UCLA (CS B.S.) and Cal Poly San Luis Obispo (CS B.S.) in
 `MIRAMAR_CS_AGREEMENTS` (`data.js`), with the 31 Miramar sending courses in
-`MIRAMAR_CS_COURSES`. They were read on ASSIST and entered by hand; once ASSIST API access is
-approved, ingestion replaces these snapshots — do not add page reads or scrapers. The Mesa
+`MIRAMAR_CS_COURSES`. They were read on ASSIST and entered by hand; if licensed ASSIST access is
+ever granted, ingestion replaces these snapshots — do not add page reads or scrapers. The Mesa
 fallback (seven catalog courses, partial Berkeley/UCLA/Pomona snapshots, two UCSD department
 equivalencies) remains for other colleges. Everything else is illustrative or unknown.
 

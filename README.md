@@ -39,7 +39,7 @@ Course and agreement research snapshot: September 13, 2026. School identity mark
 - CSUSM comparison context: [historical 2023–24 advising worksheet](https://www.csusm.edu/academicadvising/majorminor/worksheets/cs/cs.pdf). It is not treated as a 2027 admissions agreement.
 - Actual class search: [SDCCD](https://www.sdccd.edu/students/class-search/search.html).
 
-Only a bounded set of public course facts was collected. ASSIST was not scraped. The owner reports submitting an API request; approval and integration remain pending. No scheduled scraper or background network process is included.
+Only a bounded set of public course facts was collected. ASSIST was not scraped. ASSIST replied to a data request (September 2026) that system offices and institutions will get priority access (estimated Fall 2026) and that license, fee, terms and capacity for other requestors are still being determined, so there is no approved access or integration timeline. No scheduled scraper or background network process is included.
 
 Student history is entered by the demo visitor, not preloaded. Only seven Mesa catalog examples are imported; choosing City, Miramar or Continuing Education does not substitute their course catalogs. All non-calculus campus mappings and overlap recommendations are illustrative. Unsupported campus/major combinations remain explicitly unknown. General transferability is not major articulation. Current sections, seats, prerequisites and schedule feasibility are unknown. This is not a complete major, GE, GPA, unit, TAG, ADT or admissions audit.
 
