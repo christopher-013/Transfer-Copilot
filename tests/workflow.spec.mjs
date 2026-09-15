@@ -9,7 +9,14 @@ async function reachCoursework(page, includeUCLA = true) {
   await page.locator("label.school-tile", { hasText: "UC Berkeley" }).click();
   if (includeUCLA) await page.locator("label.school-tile", { hasText: "UCLA" }).click();
   await page.getByRole("button", { name: /Choose my major/ }).click();
-  await page.getByLabel("Intended major").fill("Computer Science");
+  const majorTile = page.locator(".major-tile", { hasText: "Computer Science" });
+  await expect(page.locator(".major-tile")).toHaveCount(6);
+  const majorTileBox = await majorTile.boundingBox();
+  expect(majorTileBox.height).toBeGreaterThanOrEqual(136);
+  expect(majorTileBox.width / majorTileBox.height).toBeLessThan(1.35);
+  await majorTile.click();
+  await expect(majorTile).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByLabel("Intended major")).toHaveValue("Computer Science");
   await page.getByRole("button", { name: /Add my coursework/ }).click();
   await expect(page.locator("#onboarding-main>.eyebrow")).toHaveText("STEP 04 / 04");
   await expect(page.getByRole("navigation", { name: "ASSIST agreement workflow" })).toBeVisible();
@@ -41,6 +48,8 @@ test("Miramar to Berkeley and UCLA supports grouped decisions, completion and ef
   await expect(math150).toHaveClass(/status-completed/);
   await page.locator(".agreement-journey button").last().click();
   await page.getByRole("button", { name: /See my transfer plan/ }).click();
+  const transferPlanWidth = await page.locator("#main").evaluate(el => el.getBoundingClientRect().width);
+  expect(transferPlanWidth).toBeLessThanOrEqual(1180);
   await expect(page.getByText("Transfer Efficiency", { exact: true })).toBeVisible();
   await expect(page.locator(".efficiency-dial strong")).toHaveText(/^\d{1,3}$/);
   await expect(page.locator(".efficiency-dial span")).toHaveText("/100");

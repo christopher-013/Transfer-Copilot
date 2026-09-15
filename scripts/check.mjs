@@ -139,6 +139,7 @@ const workflow = read("dist/workflow.js");
 for (const label of ["function agreementStages(", "section.groups.map", "function agreementSectionHTML(", "MIRAMAR COURSE", " EQUIVALENT", "function reviewFrame(", "STEP '+String(PLAN.step).padStart(2,\"0\")+' / 04"]) {
   if (!workflow.includes(label)) fail("guided agreement workflow is missing " + label);
 }
+for (const label of ["major-tile", "major-mark", "aria-pressed", "syncMajorTiles"]) if (!workflow.includes(label)) fail("major selection tiles are missing " + label);
 if (!workflow.includes("data-agreement-next") || !workflow.includes("data-agreement-back")) fail("guided agreement workflow has no next/back controls");
 const app = read("dist/app.js");
 for (const label of ["Transfer Completion", "efficiencyScore", "coverage*.7", "unitValue*.3", "function efficiencyRating", "data-action=\"why\"", "details class=\"schedule\""]) if (!app.includes(label)) fail("decision scoring is missing " + label);

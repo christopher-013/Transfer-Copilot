@@ -25,6 +25,8 @@ by GitHub Pages. Scripts load in order via `defer` and share one global scope:
 - `data.js` — course records, `SOURCES`, `ASSIST_AGREEMENTS` (frozen agreement snapshots)
 - `schools.js` — `schoolBadge()`, institution marks with monogram fallbacks
 - `workflow.js` — `PLAN` state, `COLLEGES`/`CAMPUSES`/`MAJORS`, the 4-step wizard
+- Step 3 keeps the free-text major field and presents the six demo majors as responsive, square selection tiles with visible and screen-reader selection state.
+- The transfer-plan workspace uses the same centered 1180px maximum width as the setup workflow.
 - `schedule.js` — dated SDCCD class search snapshot (`SDCCD_SCHEDULE`) for Find your next class
 - `app.js` — dashboard render, evidence dialogs, scenarios, sharing, WebMCP tools
 
