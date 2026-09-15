@@ -145,6 +145,7 @@ if (!workflow.includes("data-agreement-next") || !workflow.includes("data-agreem
 const app = read("dist/app.js");
 for (const label of ["Transfer Completion", "efficiencyScore", "coverage*.7", "unitValue*.3", "function efficiencyRating", "data-action=\"why\"", "details class=\"schedule\""]) if (!app.includes(label)) fail("decision scoring is missing " + label);
 for (const label of ["Course details and availability", "+scheduleHTML(c)", "View course details and availability"]) if (!app.includes(label)) fail("course availability details are missing " + label);
+if (!app.includes("efficiency-caveat") || !app.includes('.replace(\'<p class="efficiency-caveat">')) fail("the recommendation caveat removal is missing");
 if (!read("dist/workflow.css").includes("#applicability-matrix .section-heading>.source-pill{display:none}")) fail("the redundant matrix readiness note is still visible");
 if (workflow.includes("workflow-review") || workflow.includes("workflow-progress") || workflow.includes("workflow-steps") || workflow.includes("PLAN.step=5")) fail("the setup must remain a focused four-step flow without a progress rail or embedded export step");
 const exportSource = read("dist/export.js");

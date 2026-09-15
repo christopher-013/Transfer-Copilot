@@ -62,6 +62,13 @@ test("Miramar to Berkeley and UCLA supports grouped decisions, completion and ef
   await expect(page.locator(".efficiency-dial span")).toHaveText("/100");
   await expect(page.locator(".efficiency-verdict")).toContainText(/recommendation/i);
   await expect(page.locator(".efficiency-summary")).toContainText("transfer leverage");
+  await expect(page.locator(".efficiency-caveat")).toHaveCount(0);
+  const recommendationCards = await page.locator(".next-recommendation-head").evaluate(el => {
+    const course = el.querySelector(".next-course").getBoundingClientRect();
+    const score = el.querySelector(".efficiency-visual").getBoundingClientRect();
+    return { courseHeight: course.height, scoreHeight: score.height };
+  });
+  expect(Math.abs(recommendationCards.courseHeight - recommendationCards.scoreHeight)).toBeLessThanOrEqual(1);
   await page.getByRole("button", { name: /What this score means/ }).click();
   await expect(page.getByText("85–100")).toBeVisible();
   await expect(page.locator("#detail-dialog").getByText(/not an admission probability/i)).toBeVisible();
